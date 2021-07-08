@@ -26,6 +26,7 @@ jobs:
 
       - name: Setup maptool
         run: |
+          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
@@ -35,4 +36,6 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i germany-latest.osm.pbf germany-latest.bin
           
       - name: Upload Artifact
-        run: gh release create $(date -I) germany-latest.bin
+        run: |
+          gh auth login
+          gh release create $(date -I) germany-latest.bin
