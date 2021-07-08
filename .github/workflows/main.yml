@@ -36,7 +36,7 @@ jobs:
           ./navit.sh --skip-license --prefix=navit
       - name: Build map for Germany
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 3221225472 -i germany-latest.osm.pbf germany-latest.bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i germany-latest.osm.pbf germany-latest.bin
           
       - name: Upload Artifact
-        run: gh release create test1 germany-latest.bin
+        run: gh release create $(date -I) germany-latest.bin
