@@ -33,7 +33,10 @@ jobs:
           wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
+          ./navit.sh --skip-license --prefix=navit
       - name: Build map for Germany
         run: |
-          ./navit.sh --skip-license --prefix=navit
           ./navit/bin/maptool --64bit --protobuf --slice-size 3221225472 -i germany-latest.osm.pbf germany-latest.bin
+          
+      - name: Upload Artifact
+        run: gh release create test1 germany-latest.bin
