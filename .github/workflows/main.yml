@@ -24,7 +24,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Debug
         run: |
-          gh auth login --with-token
+          gh auth login
           gh release list
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -44,7 +44,7 @@ jobs:
           
       - name: Upload Artifact
         run: |
-          echo $GITHUB_TOKEN | gh auth login --with-token
+          gh auth login
           gh release create $(date -I) germany-latest.bin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
