@@ -30,8 +30,10 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Setup maptool
         run: |
-          wget https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh
+          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
+      - name: Build map for Germany
+        run: |
           ./navit.sh --skip-license --prefix=navit
-          ./navit/bin/maptool -h
+          ./navit/bin/maptool --64bit --protobuf --slice-size 3221225472 -i germany-latest.osm.pbf germany-latest.bin
