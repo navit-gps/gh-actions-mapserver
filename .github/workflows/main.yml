@@ -19,13 +19,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Setup maptool
-        run: |
-          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
-          chmod +x navit.sh
-          mkdir navit
-          ./navit.sh --skip-license --prefix=navit
       - name: Create Release
         run: |
           gh release create $(date -I) --notes "MAps from $(date -I)"
@@ -42,6 +35,14 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     
     steps:
+      - uses: actions/checkout@v2
+      - name: Setup maptool
+        run: |
+          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          chmod +x navit.sh
+          mkdir navit
+          ./navit.sh --skip-license --prefix=navit
       - name: Download ${{ matrix.subregion }}
         run: |
           wget https://download.geofabrik.de/europe/germany/${{ matrix.subregion }}-latest.osm.pbf
