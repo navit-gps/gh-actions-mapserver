@@ -24,6 +24,7 @@ jobs:
           gh release create $(date -I) --notes "MAps from $(date -I)"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - continue-on-error: true
           
   convert_maps:
     needs: prepare
@@ -49,10 +50,10 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf ${{ matrix.subregion }}-$(date -I).bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf germany-${{ matrix.subregion }}-$(date -I).bin
           
       - name: Upload Artifact
         run: |
-          gh release upload $(date -I) ${{ matrix.subregion }}-$(date -I).bin
+          gh release upload $(date -I) germany-${{ matrix.subregion }}-$(date -I).bin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
