@@ -24,8 +24,10 @@ jobs:
       - uses: actions/checkout@v2
       - name: Debug
         run: |
-          gh auth login
+          echo $GITHUB_TOKEN | gh auth login --with-token
           gh release list
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Download germany.osm.pbf
         run: wget https://download.geofabrik.de/europe/germany-latest.osm.pbf
 
@@ -42,5 +44,7 @@ jobs:
           
       - name: Upload Artifact
         run: |
-          gh auth login
+          echo $GITHUB_TOKEN | gh auth login --with-token
           gh release create $(date -I) germany-latest.bin
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
