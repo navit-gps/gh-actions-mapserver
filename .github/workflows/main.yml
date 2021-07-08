@@ -18,19 +18,13 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        subregion: ["baden-wuerttemberg", "baden-wuerttemberg", "bayern", "berlin", "brandenburg", "bremen", "hamburg", "hessen", "mecklenburg-vorpommern", "niedersachsen", "nordrhein-westfalen", "rheinland-pfalz", "saarland", "sachsen", "sachsen-anhalt", "schleswig-holstein", "thueringen", "bayern", "berlin", "brandenburg", "bremen", "hamburg", "hessen", "mecklenburg-vorpommern", "niedersachsen", "nordrhein-westfalen", "rheinland-pfalz", "saarland", "sachsen", "sachsen-anhalt", "schleswig-holstein", "thueringen"]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v2
-      - name: Debug
-        run: |
-          #gh auth login
-          gh release list
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Download germany.osm.pbf
-        run: wget https://download.geofabrik.de/europe/germany/rheinland-pfalz-latest.osm.pbf
-
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
@@ -38,13 +32,17 @@ jobs:
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
-      - name: Build map for rheinland-pfalz
+          
+      - name: Download ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i rheinland-pfalz-latest.osm.pbf rheinland-pfalz-latest.bin
+          wget https://download.geofabrik.de/europe/germany/${{ matrix.subregion }}-latest.osm.pbf
+
+      - name: Build map for ${{ matrix.subregion }}
+        run: |
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf ${{ matrix.subregion }}-$(date -I).bin
           
       - name: Upload Artifact
         run: |
-          #gh auth login
-          gh release create $(date -I) *.bin
+          gh release create $(date -I) ${{ matrix.subregion }}-$(date -I).bin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
