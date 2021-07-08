@@ -21,6 +21,10 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Debug
+        run: |
+          gh auth login
+          gh release list
       - name: Download germany.osm.pbf
         run: wget https://download.geofabrik.de/europe/germany-latest.osm.pbf
 
