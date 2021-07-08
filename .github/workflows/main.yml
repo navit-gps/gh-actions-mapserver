@@ -1,12 +1,12 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Germany
 
 # Controls when the workflow will run
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '30 5,17 * * *'
+    - cron:  '30 1 * * *'
 
 
   # Allows you to run this workflow manually from the Actions tab
@@ -21,13 +21,9 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - run: df -h
-
-      # Runs a single command using the runners shell
       - name: Download germany.osm.pbf
         run: wget https://download.geofabrik.de/europe/germany-latest.osm.pbf
 
-      # Runs a set of commands using the runners shell
       - name: Setup maptool
         run: |
           wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
