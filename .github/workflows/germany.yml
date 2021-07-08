@@ -21,9 +21,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Create Release
-        continue-on-error: true
         run: |
-          gh release create $(date -I) --notes "MAps from $(date -I)"
+          gh release create $(date -I) --notes "Maps from $(date -I)" || true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
