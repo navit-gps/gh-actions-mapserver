@@ -45,6 +45,6 @@ jobs:
       - name: Upload Artifact
         run: |
           #gh auth login
-          gh release create $(date -I) germany-latest.bin
+          gh release create $(date -I) *.bin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
