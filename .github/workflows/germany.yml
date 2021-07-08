@@ -18,10 +18,10 @@ jobs:
   # This workflow contains a single job called "build"
   prepare:
     runs-on: ubuntu-latest
-    continue-on-error: true
     steps:
       - uses: actions/checkout@v2
       - name: Create Release
+        continue-on-error: true
         run: |
           gh release create $(date -I) --notes "MAps from $(date -I)"
         env:
