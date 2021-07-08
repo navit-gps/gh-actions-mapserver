@@ -15,14 +15,8 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  prepare:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        subregion: ["baden-wuerttemberg", "baden-wuerttemberg", "bayern", "berlin", "brandenburg", "bremen", "hamburg", "hessen", "mecklenburg-vorpommern", "niedersachsen", "nordrhein-westfalen", "rheinland-pfalz", "saarland", "sachsen", "sachsen-anhalt", "schleswig-holstein", "thueringen", "bayern", "berlin", "brandenburg", "bremen", "hamburg", "hessen", "mecklenburg-vorpommern", "niedersachsen", "nordrhein-westfalen", "rheinland-pfalz", "saarland", "sachsen", "sachsen-anhalt", "schleswig-holstein", "thueringen"]
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v2
       - name: Setup maptool
@@ -32,7 +26,22 @@ jobs:
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
+      - name: Create Release
+        run: |
+          gh release create $(date -I) --notes "MAps from $(date -I)"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
+  convert_maps:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        subregion: ["baden-wuerttemberg", "baden-wuerttemberg", "bayern", "berlin", "brandenburg", "bremen", "hamburg", "hessen", "mecklenburg-vorpommern", "niedersachsen", "nordrhein-westfalen", "rheinland-pfalz", "saarland", "sachsen", "sachsen-anhalt", "schleswig-holstein", "thueringen", "bayern", "berlin", "brandenburg", "bremen", "hamburg", "hessen", "mecklenburg-vorpommern", "niedersachsen", "nordrhein-westfalen", "rheinland-pfalz", "saarland", "sachsen", "sachsen-anhalt", "schleswig-holstein", "thueringen"]
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    
+    steps:
       - name: Download ${{ matrix.subregion }}
         run: |
           wget https://download.geofabrik.de/europe/germany/${{ matrix.subregion }}-latest.osm.pbf
@@ -43,6 +52,6 @@ jobs:
           
       - name: Upload Artifact
         run: |
-          gh release create $(date -I) ${{ matrix.subregion }}-$(date -I).bin
+          gh release upload $(date -I) ${{ matrix.subregion }}-$(date -I).bin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
