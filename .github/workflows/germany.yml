@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Create Release
         run: |
-          gh release create $(date -I) --draft --notes "Maps from $(date -I)" || true
+          gh release create $(date -I) --title "Maps from $(date -I)" --notes "Automatically Processed Maps  || true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
@@ -65,6 +65,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Publish Release
         run: |
-          gh release create $(date -I)_test || true
+          #gh release create $(date -I)_test || true
+          hub release edit --draft=false $(date -I)_test
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
