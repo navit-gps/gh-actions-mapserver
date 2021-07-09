@@ -66,6 +66,6 @@ jobs:
       - name: Publish Release
         run: |
           #gh release create $(date -I)_test || true
-          hub release edit --draft=false $(date -I)_test
+          hub release edit --draft=false -m "" $(date -I)_test
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
