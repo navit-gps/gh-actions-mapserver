@@ -31,7 +31,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        subregion: ['baden-wuerttemberg', 'bayern', 'berlin', 'brandenburg', 'bremen', 'hamburg', 'hessen', 'mecklenburg-vorpommern', 'niedersachsen', 'nordrhein-westfalen', 'rheinland-pfalz', 'saarland', 'sachsen', 'sachsen-anhalt', 'schleswig-holstein', 'thueringen']
+        #subregion: ['baden-wuerttemberg', 'bayern', 'berlin', 'brandenburg', 'bremen', 'hamburg', 'hessen', 'mecklenburg-vorpommern', 'niedersachsen', 'nordrhein-westfalen', 'rheinland-pfalz', 'saarland', 'sachsen', 'sachsen-anhalt', 'schleswig-holstein', 'thueringen']
+        subregion: ['bremen', 'hamburg']
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     
@@ -61,8 +62,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: convert_maps
     steps:
+      - uses: actions/checkout@v2
       - name: Publish Release
         run: |
-          gh release create $(date -I) || true
+          gh release create $(date -I)_test || true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
