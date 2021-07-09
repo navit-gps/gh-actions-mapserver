@@ -55,7 +55,7 @@ jobs:
           
       - name: Upload Artifact
         run: |
-          gh release upload $(date -I) germany-${{ matrix.subregion }}-$(date -I).bin
+          gh release upload $(date -I)_test germany-${{ matrix.subregion }}-$(date -I).bin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   post:
