@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Convert Maps
+name: Germany
 
 # Controls when the workflow will run
 on:
@@ -90,7 +90,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        subregion: ["afghanistan","armenia","azerbaijan","bangladesh","bhutan","cambodia","china","gcc-states","india","indonesia","iran","iraq","israel-and-palestine","japan","jordan","kazakhstan","kyrgyzstan","laos","lebanon","malaysia-singapore-brunei","maldives","mongolia","myanmar","nepal","north-korea","pakistan","philippines","south-korea","sri-lanka","syria","taiwan","tajikistan","thailand","turkmenistan","uzbekistan","vietnam","yemen"]
+        subregion: ["afghanistan", "armenia", "azerbaijan", "bangladesh", "bhutan", "cambodia", "china", "gcc-states", "india", "indonesia", "iran", "iraq", "israel-and-palestine", "japan", "jordan", "kazakhstan", "kyrgyzstan", "laos", "lebanon", "malaysia-singapore-brunei", "maldives", "mongolia", "myanmar", "nepal", "north-korea", "pakistan", "philippines", "south-korea", "sri-lanka", "syria", "taiwan", "tajikistan", "thailand", "turkmenistan", "uzbekistan", "vietnam", "yemen"]
     
     steps:
       - uses: actions/checkout@v2
@@ -152,7 +152,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        subregion: ["american-oceania-latest","australia-latest","cook-islands-latest","fiji-latest","ile-de-clipperton-latest","kiribati-latest","marshall-islands-latest","micronesia-latest","nauru-latest","new-caledonia-latest","new-zealand-latest","niue-latest","palau-latest","papua-new-guinea-latest","pitcairn-islands-latest","polynesie-francaise-latest","samoa-latest","solomon-islands-latest","tokelau-latest","tonga-latest","tuvalu-latest","vanuatu-latest","wallis-et-futuna-latest"]
+        subregion: ["american-oceania", "australia", "cook-islands", "fiji", "ile-de-clipperton", "kiribati", "marshall-islands", "micronesia", "nauru", "new-caledonia", "new-zealand", "niue", "palau", "papua-new-guinea", "pitcairn-islands", "polynesie-francaise", "samoa", "solomon-islands", "tokelau", "tonga", "tuvalu", "vanuatu", "wallis-et-futuna-latest"]
     
     steps:
       - uses: actions/checkout@v2
@@ -183,7 +183,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        subregion: ["bahamas-latest","belize-latest","costa-rica-latest","cuba-latest","el-salvador-latest","guatemala-latest","haiti-and-domrep-latest","honduras-latest","jamaica-latest","nicaragua-latest"]
+        subregion: ["bahamas", "belize", "costa-rica", "cuba", "el-salvador", "guatemala", "haiti-and-domrep", "honduras", "jamaica", "nicaragua-latest"]
     
     steps:
       - uses: actions/checkout@v2
@@ -213,19 +213,11 @@ jobs:
     needs: germany
     runs-on: ubuntu-latest
     steps:
-      - name: Europe Done :-)
-        run: "true"
+      name: Europe Done :-)
+      run: true
   post:
     runs-on: ubuntu-latest
-    needs: 
-     - africa
-     - antarctica
-     - asia
-     - australia-oceania
-     - central-america
-     - europe 
-     #- north-america
-     #- south-america
+    needs: africa, antarctica, asia, australia-oceania, central-america, europe, north-america, south-america
     steps:
       - uses: actions/checkout@v2
       - name: Publish Release
