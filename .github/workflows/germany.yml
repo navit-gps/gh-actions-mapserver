@@ -64,6 +64,6 @@ jobs:
       - name: Publish Release
         run: |
           # Replace with gh command when they have a corresponding edit command
-          hub release edit --draft=false -m "" $(date -I)_test
+          hub release edit --draft=false -m "" $(date -I)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
