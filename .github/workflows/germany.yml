@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Germany
+name: Convert Maps
 
 # Controls when the workflow will run
 on:
@@ -26,7 +26,97 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
-  convert_maps:
+  africa:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        subregion: ["algeria", "angola", "benin", "botswana", "burkina-faso", "burundi", "cameroon", "canary-islands", "cape-verde", "central-african-republic", "chad", "comores", "congo-brazzaville", "congo-democratic-republic", "djibouti", "egypt", "equatorial-guinea", "eritrea", "ethiopia", "gabon", "ghana", "guinea", "guinea-bissau", "ivory-coast", "kenya", "lesotho", "liberia", "libya", "madagascar", "malawi", "mali", "mauritania", "mauritius", "morocco", "mozambique", "namibia", "niger", "nigeria", "rwanda", "saint-helena-ascension-and-tristan-da-cunha", "sao-tome-and-principe", "senegal-and-gambia", "seychelles", "sierra-leone", "somalia", "south-africa", "south-sudan", "sudan", "swaziland", "tanzania", "togo", "tunisia", "uganda", "zambia", "zimbabwe"]
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup maptool
+        run: |
+          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          chmod +x navit.sh
+          mkdir navit
+          ./navit.sh --skip-license --prefix=navit
+          
+      - name: Download ${{ matrix.subregion }}
+        run: |
+          wget https://download.geofabrik.de/africa/${{ matrix.subregion }}-latest.osm.pbf
+
+      - name: Build map for ${{ matrix.subregion }}
+        run: |
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf africa-${{ matrix.subregion }}-$(date -I).bin
+          
+      - name: Upload Artifact
+        run: |
+          gh release upload $(date -I) africa-${{ matrix.subregion }}-$(date -I).bin
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+  antarctica:
+    needs: prepare
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup maptool
+        run: |
+          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          chmod +x navit.sh
+          mkdir navit
+          ./navit.sh --skip-license --prefix=navit
+          
+      - name: Download ${{ matrix.subregion }}
+        run: |
+          wget https://download.geofabrik.de/antarctica-latest.osm.pbf
+
+      - name: Build map for ${{ matrix.subregion }}
+        run: |
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i antarctica-latest.osm.pbf antarctica-$(date -I).bin
+          
+      - name: Upload Artifact
+        run: |
+          gh release upload $(date -I) antarctica-$(date -I).bin
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+  asia:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        subregion: ["afghanistan","armenia","azerbaijan","bangladesh","bhutan","cambodia","china","gcc-states","india","indonesia","iran","iraq","israel-and-palestine","japan","jordan","kazakhstan","kyrgyzstan","laos","lebanon","malaysia-singapore-brunei","maldives","mongolia","myanmar","nepal","north-korea","pakistan","philippines","south-korea","sri-lanka","syria","taiwan","tajikistan","thailand","turkmenistan","uzbekistan","vietnam","yemen"]
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup maptool
+        run: |
+          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          chmod +x navit.sh
+          mkdir navit
+          ./navit.sh --skip-license --prefix=navit
+          
+      - name: Download ${{ matrix.subregion }}
+        run: |
+          wget https://download.geofabrik.de/asia/${{ matrix.subregion }}-latest.osm.pbf
+
+      - name: Build map for ${{ matrix.subregion }}
+        run: |
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf asia-${{ matrix.subregion }}-$(date -I).bin
+          
+      - name: Upload Artifact
+        run: |
+          gh release upload $(date -I) asia-${{ matrix.subregion }}-$(date -I).bin
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+  germany:
     needs: prepare
     runs-on: ubuntu-latest
     strategy:
@@ -56,9 +146,78 @@ jobs:
           gh release upload $(date -I) germany-${{ matrix.subregion }}-$(date -I).bin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+  australia-oceania:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        subregion: ["american-oceania-latest","australia-latest","cook-islands-latest","fiji-latest","ile-de-clipperton-latest","kiribati-latest","marshall-islands-latest","micronesia-latest","nauru-latest","new-caledonia-latest","new-zealand-latest","niue-latest","palau-latest","papua-new-guinea-latest","pitcairn-islands-latest","polynesie-francaise-latest","samoa-latest","solomon-islands-latest","tokelau-latest","tonga-latest","tuvalu-latest","vanuatu-latest","wallis-et-futuna-latest"]
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup maptool
+        run: |
+          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          chmod +x navit.sh
+          mkdir navit
+          ./navit.sh --skip-license --prefix=navit
+          
+      - name: Download ${{ matrix.subregion }}
+        run: |
+          wget https://download.geofabrik.de/australia-oceania/${{ matrix.subregion }}-latest.osm.pbf
+
+      - name: Build map for ${{ matrix.subregion }}
+        run: |
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf australia-oceania-${{ matrix.subregion }}-$(date -I).bin
+          
+      - name: Upload Artifact
+        run: |
+          gh release upload $(date -I) australia-oceania-${{ matrix.subregion }}-$(date -I).bin
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+  central-america:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        subregion: ["bahamas-latest","belize-latest","costa-rica-latest","cuba-latest","el-salvador-latest","guatemala-latest","haiti-and-domrep-latest","honduras-latest","jamaica-latest","nicaragua-latest"]
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup maptool
+        run: |
+          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          chmod +x navit.sh
+          mkdir navit
+          ./navit.sh --skip-license --prefix=navit
+          
+      - name: Download ${{ matrix.subregion }}
+        run: |
+          wget https://download.geofabrik.de/central-america/${{ matrix.subregion }}-latest.osm.pbf
+
+      - name: Build map for ${{ matrix.subregion }}
+        run: |
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf central-america-${{ matrix.subregion }}-$(date -I).bin
+          
+      - name: Upload Artifact
+        run: |
+          gh release upload $(date -I) central-america-${{ matrix.subregion }}-$(date -I).bin
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  europe:
+    needs: germany
+    runs-on: ubuntu-latest
+    steps:
+      name: Europe Done :-)
+      run: true
   post:
     runs-on: ubuntu-latest
-    needs: convert_maps
+    needs: africa, antarctica, asia, australia-oceania, central-america, europe, north-america, south-america
     steps:
       - uses: actions/checkout@v2
       - name: Publish Release
