@@ -217,7 +217,15 @@ jobs:
       run: true
   post:
     runs-on: ubuntu-latest
-    needs: africa, antarctica, asia, australia-oceania, central-america, europe, north-america, south-america
+    needs: 
+    - africa
+    - antarctica
+    - asia
+    - australia-oceania
+    - central-america
+    - europe
+    #- north-america
+    #- south-america
     steps:
       - uses: actions/checkout@v2
       - name: Publish Release
