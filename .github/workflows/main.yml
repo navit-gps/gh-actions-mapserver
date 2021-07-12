@@ -26,7 +26,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Create Release
         run: |
-          gh release create --draft $(date -I) --title "$(date -I)" --notes "Automatically Processed Maps from $(date -I)"  || true
+          gh release create $(date -I) --title "$(date -I)" --notes "Automatically Processed Maps from $(date -I)"  || true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
