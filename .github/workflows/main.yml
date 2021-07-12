@@ -2,6 +2,10 @@
 
 name: Process Maps
 
+env:
+  GIT_EDITOR: true
+
+
 # Controls when the workflow will run
 on:
   schedule:
