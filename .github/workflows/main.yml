@@ -249,7 +249,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        subregion: ["bedfordshire","berkshire","bristol","buckinghamshire","cambridgeshire","cheshire","cornwall","cumbria","derbyshire","devon","dorset","durham","east-sussex","east-yorkshire-with-hull","essex","gloucestershire","greater-london","greater-manchester","hampshire","herefordshire","hertfordshire","isle-of-wight","kent","lancashire","leicestershire","lincolnshire","merseyside","norfolk","north-yorkshire","northamptonshire","northumberland","nottinghamshire","oxfordshire","rutland","shropshire","somerset","south-yorkshire","staffordshire","suffolk","surrey","tyne-and-wear","warwickshire","west-midlands","west-sussex","west-yorkshire","wiltshire","worcestershire"]
+        subregion: ["england","scotland","wales"]
     
     steps:
       - uses: actions/checkout@v2
@@ -389,15 +389,15 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget https://download.geofabrik.de/central-america/${{ matrix.subregion }}-latest.osm.pbf
+          wget https://download.geofabrik.de/europe/${{ matrix.subregion }}-latest.osm.pbf
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf central-america-${{ matrix.subregion }}-$(date -I).bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-${{ matrix.subregion }}-$(date -I).bin
           
       - name: Upload Artifact
         run: |
-          hub release edit $(date -I) --attach central-america-${{ matrix.subregion }}-$(date -I).bin
+          hub release edit $(date -I) --attach europe-${{ matrix.subregion }}-$(date -I).bin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
  
