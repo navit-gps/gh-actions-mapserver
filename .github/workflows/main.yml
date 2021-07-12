@@ -116,37 +116,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
-  germany:
-    needs: prepare
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        subregion: ['baden-wuerttemberg', 'bayern', 'berlin', 'brandenburg', 'bremen', 'hamburg', 'hessen', 'mecklenburg-vorpommern', 'niedersachsen', 'nordrhein-westfalen', 'rheinland-pfalz', 'saarland', 'sachsen', 'sachsen-anhalt', 'schleswig-holstein', 'thueringen']
-    
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup maptool
-        run: |
-          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
-          chmod +x navit.sh
-          mkdir navit
-          ./navit.sh --skip-license --prefix=navit
-          
-      - name: Download ${{ matrix.subregion }}
-        run: |
-          wget https://download.geofabrik.de/europe/germany/${{ matrix.subregion }}-latest.osm.pbf
-
-      - name: Build map for ${{ matrix.subregion }}
-        run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf germany-${{ matrix.subregion }}-$(date -I).bin
-          
-      - name: Upload Artifact
-        run: |
-          gh release upload $(date -I) germany-${{ matrix.subregion }}-$(date -I).bin
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
   australia-oceania:
     needs: prepare
     runs-on: ubuntu-latest
@@ -208,24 +177,425 @@ jobs:
           gh release upload $(date -I) central-america-${{ matrix.subregion }}-$(date -I).bin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
+  france:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        subregion: ["alsace","aquitaine","auvergne","basse-normandie","bourgogne","bretagne","centre","champagne-ardenne","corse","franche-comte","guadeloupe","guyane","haute-normandie","ile-de-france","languedoc-roussillon","limousin","lorraine","martinique","mayotte","midi-pyrenees","nord-pas-de-calais","pays-de-la-loire","picardie","poitou-charentes","provence-alpes-cote-d-azur","reunion","rhone-alpes"]
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup maptool
+        run: |
+          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          chmod +x navit.sh
+          mkdir navit
+          ./navit.sh --skip-license --prefix=navit
+          
+      - name: Download ${{ matrix.subregion }}
+        run: |
+          wget https://download.geofabrik.de/europe/france/${{ matrix.subregion }}-latest.osm.pbf
+
+      - name: Build map for ${{ matrix.subregion }}
+        run: |
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-france-${{ matrix.subregion }}-$(date -I).bin
+          
+      - name: Upload Artifact
+        run: |
+          gh release upload $(date -I) europe-france-${{ matrix.subregion }}-$(date -I).bin
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
+  germany:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        subregion: ["baden-wuerttemberg","bayern","berlin","brandenburg","bremen","hamburg","hessen","mecklenburg-vorpommern","niedersachsen","nordrhein-westfalen","rheinland-pfalz","saarland","sachsen-anhalt","sachsen","schleswig-holstein","thueringen"]
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup maptool
+        run: |
+          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          chmod +x navit.sh
+          mkdir navit
+          ./navit.sh --skip-license --prefix=navit
+          
+      - name: Download ${{ matrix.subregion }}
+        run: |
+          wget https://download.geofabrik.de/europe/germany/${{ matrix.subregion }}-latest.osm.pbf
+
+      - name: Build map for ${{ matrix.subregion }}
+        run: |
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-germany-${{ matrix.subregion }}-$(date -I).bin
+          
+      - name: Upload Artifact
+        run: |
+          gh release upload $(date -I) europe-germany-${{ matrix.subregion }}-$(date -I).bin
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
+  great-britain:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        subregion: ["bedfordshire","berkshire","bristol","buckinghamshire","cambridgeshire","cheshire","cornwall","cumbria","derbyshire","devon","dorset","durham","east-sussex","east-yorkshire-with-hull","essex","gloucestershire","greater-london","greater-manchester","hampshire","herefordshire","hertfordshire","isle-of-wight","kent","lancashire","leicestershire","lincolnshire","merseyside","norfolk","north-yorkshire","northamptonshire","northumberland","nottinghamshire","oxfordshire","rutland","shropshire","somerset","south-yorkshire","staffordshire","suffolk","surrey","tyne-and-wear","warwickshire","west-midlands","west-sussex","west-yorkshire","wiltshire","worcestershire"]
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup maptool
+        run: |
+          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          chmod +x navit.sh
+          mkdir navit
+          ./navit.sh --skip-license --prefix=navit
+          
+      - name: Download ${{ matrix.subregion }}
+        run: |
+          wget https://download.geofabrik.de/europe/great-britain/${{ matrix.subregion }}-latest.osm.pbf
+
+      - name: Build map for ${{ matrix.subregion }}
+        run: |
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-great-britain-${{ matrix.subregion }}-$(date -I).bin
+          
+      - name: Upload Artifact
+        run: |
+          gh release upload $(date -I) europe-great-britain-${{ matrix.subregion }}-$(date -I).bin
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
+  
+  italy:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        subregion: ["centro","isole","nord-est","nord-ovest","sud"]
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup maptool
+        run: |
+          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          chmod +x navit.sh
+          mkdir navit
+          ./navit.sh --skip-license --prefix=navit
+          
+      - name: Download ${{ matrix.subregion }}
+        run: |
+          wget https://download.geofabrik.de/europe/italy/${{ matrix.subregion }}-latest.osm.pbf
+
+      - name: Build map for ${{ matrix.subregion }}
+        run: |
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-italy-${{ matrix.subregion }}-$(date -I).bin
+          
+      - name: Upload Artifact
+        run: |
+          gh release upload $(date -I) europe-italy-${{ matrix.subregion }}-$(date -I).bin
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+  netherlands:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        subregion: ["drenthe","flevoland","friesland","gelderland","groningen","limburg","noord-brabant","noord-holland","overijssel","utrecht","zeeland","zuid-holland"]
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup maptool
+        run: |
+          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          chmod +x navit.sh
+          mkdir navit
+          ./navit.sh --skip-license --prefix=navit
+          
+      - name: Download ${{ matrix.subregion }}
+        run: |
+          wget https://download.geofabrik.de/europe/netherlands/${{ matrix.subregion }}-latest.osm.pbf
+
+      - name: Build map for ${{ matrix.subregion }}
+        run: |
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-netherlands-${{ matrix.subregion }}-$(date -I).bin
+          
+      - name: Upload Artifact
+        run: |
+          gh release upload $(date -I) europe-netherlands-${{ matrix.subregion }}-$(date -I).bin
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  poland:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        subregion: ["dolnoslaskie","kujawsko-pomorskie","lodzkie","lubelskie","lubuskie","malopolskie","mazowieckie","opolskie","podkarpackie","podlaskie","pomorskie","slaskie","swietokrzyskie","warminsko-mazurskie","wielkopolskie","zachodniopomorskie"]
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup maptool
+        run: |
+          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          chmod +x navit.sh
+          mkdir navit
+          ./navit.sh --skip-license --prefix=navit
+          
+      - name: Download ${{ matrix.subregion }}
+        run: |
+          wget https://download.geofabrik.de/europe/poland/${{ matrix.subregion }}-latest.osm.pbf
+
+      - name: Build map for ${{ matrix.subregion }}
+        run: |
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-poland-${{ matrix.subregion }}-$(date -I).bin
+          
+      - name: Upload Artifact
+        run: |
+          gh release upload $(date -I) europe-poland-${{ matrix.subregion }}-$(date -I).bin
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
+  europe_other:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        subregion: ['albania', 'andorra', 'austria', 'azores', 'belarus', 'belgium', 'bosnia-herzegovina', 'bulgaria', 'croatia', 'cyprus', 'czech-republic', 'denmark', 'estonia', 'faroe-islands', 'finland', 'georgia', 'greece', 'guernsey-jersey', 'hungary', 'iceland', 'ireland-and-northern-ireland', 'isle-of-man', 'kosovo', 'latvia', 'liechtenstein', 'lithuania', 'luxembourg', 'macedonia', 'malta', 'moldova', 'monaco', 'montenegro', 'norway', 'portugal', 'romania', 'serbia', 'slovakia', 'slovenia', 'spain', 'sweden', 'switzerland', 'turkey', 'ukraine']
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup maptool
+        run: |
+          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          chmod +x navit.sh
+          mkdir navit
+          ./navit.sh --skip-license --prefix=navit
+          
+      - name: Download ${{ matrix.subregion }}
+        run: |
+          wget https://download.geofabrik.de/central-america/${{ matrix.subregion }}-latest.osm.pbf
+
+      - name: Build map for ${{ matrix.subregion }}
+        run: |
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf central-america-${{ matrix.subregion }}-$(date -I).bin
+          
+      - name: Upload Artifact
+        run: |
+          gh release upload $(date -I) central-america-${{ matrix.subregion }}-$(date -I).bin
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+ 
+  canada:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        subregion: ["alberta","british-columbia","manitoba","new-brunswick","newfoundland-and-labrador","northwest-territories","nova-scotia","nunavut","ontario","prince-edward-island","quebec","saskatchewan","yukon"]
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup maptool
+        run: |
+          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          chmod +x navit.sh
+          mkdir navit
+          ./navit.sh --skip-license --prefix=navit
+          
+      - name: Download ${{ matrix.subregion }}
+        run: |
+          wget https://download.geofabrik.de/north-america/canada/${{ matrix.subregion }}-latest.osm.pbf
+
+      - name: Build map for ${{ matrix.subregion }}
+        run: |
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf north-america-canada-${{ matrix.subregion }}-$(date -I).bin
+          
+      - name: Upload Artifact
+        run: |
+          gh release upload $(date -I) north-america-canada-${{ matrix.subregion }}-$(date -I).bin
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+  us:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        subregion: ["alabama","alaska","arizona","arkansas","california","colorado","connecticut","delaware","district-of-columbia","florida","georgia","hawaii","idaho","illinois","indiana","iowa","kansas","kentucky","louisiana","maine","maryland","massachusetts","michigan","minnesota","mississippi","missouri","montana","nebraska","nevada","new-hampshire","new-jersey","new-mexico","new-york","north-carolina","north-dakota","ohio","oklahoma","oregon","pennsylvania","puerto-rico","rhode-island","south-carolina","south-dakota","tennessee","texas","utah","vermont","virginia","washington","west-virginia","wisconsin","wyoming"]
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup maptool
+        run: |
+          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          chmod +x navit.sh
+          mkdir navit
+          ./navit.sh --skip-license --prefix=navit
+          
+      - name: Download ${{ matrix.subregion }}
+        run: |
+          wget https://download.geofabrik.de/north-america/us/${{ matrix.subregion }}-latest.osm.pbf
+
+      - name: Build map for ${{ matrix.subregion }}
+        run: |
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf north-america-us-${{ matrix.subregion }}-$(date -I).bin
+          
+      - name: Upload Artifact
+        run: |
+          gh release upload $(date -I) north-america-us-${{ matrix.subregion }}-$(date -I).bin
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+ 
+  north-america_other:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        subregion: ["greenland","mexico"]
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup maptool
+        run: |
+          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          chmod +x navit.sh
+          mkdir navit
+          ./navit.sh --skip-license --prefix=navit
+          
+      - name: Download ${{ matrix.subregion }}
+        run: |
+          wget https://download.geofabrik.de/north-america/${{ matrix.subregion }}-latest.osm.pbf
+
+      - name: Build map for ${{ matrix.subregion }}
+        run: |
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf north-america-${{ matrix.subregion }}-$(date -I).bin
+          
+      - name: Upload Artifact
+        run: |
+          gh release upload $(date -I) north-america-${{ matrix.subregion }}-$(date -I).bin
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  brazil:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        subregion: ["centro-oeste","nordeste","norte","sudeste","sul"]
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup maptool
+        run: |
+          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          chmod +x navit.sh
+          mkdir navit
+          ./navit.sh --skip-license --prefix=navit
+          
+      - name: Download ${{ matrix.subregion }}
+        run: |
+          wget https://download.geofabrik.de/south-america/brazil/${{ matrix.subregion }}-latest.osm.pbf
+
+      - name: Build map for ${{ matrix.subregion }}
+        run: |
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf south-america-brazil-${{ matrix.subregion }}-$(date -I).bin
+          
+      - name: Upload Artifact
+        run: |
+          gh release upload $(date -I) south-america-brazil-${{ matrix.subregion }}-$(date -I).bin
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  south-america_other:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        subregion: ["argentina","bolivia","chile","colombia","ecuador","paraguay","peru","suriname","uruguay","venezuela"]
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup maptool
+        run: |
+          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          chmod +x navit.sh
+          mkdir navit
+          ./navit.sh --skip-license --prefix=navit
+          
+      - name: Download ${{ matrix.subregion }}
+        run: |
+          wget https://download.geofabrik.de/south-america/${{ matrix.subregion }}-latest.osm.pbf
+
+      - name: Build map for ${{ matrix.subregion }}
+        run: |
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf south-america-${{ matrix.subregion }}-$(date -I).bin
+          
+      - name: Upload Artifact
+        run: |
+          gh release upload $(date -I) south-america-${{ matrix.subregion }}-$(date -I).bin
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   europe:
-    needs: germany
+    needs: 
+      - france
+      - germany
+      - great-britain
+      - italy
+      - netherlands
+      - poland
+      - europe_other
     runs-on: ubuntu-latest
     steps:
-      - name: Europe Done :-)
+      - name: Done :-)
         run: "true"
+  
+  north-america:
+    needs: 
+      - canada
+      - us
+      - north-america_other
+    runs-on: ubuntu-latest
+    steps:
+      - name: Done :-)
+        run: "true"
+  
+  south-america:
+    needs: 
+      - brazil
+      - south-america_other
+    runs-on: ubuntu-latest
+    steps:
+      - name: Done :-)
+        run: "true"
+  
   post:
     runs-on: ubuntu-latest
-    needs: 
+    needs:
     - africa
     - antarctica
     - asia
     - australia-oceania
     - central-america
     - europe
-    #- north-america
-    #- south-america
+    - north-america
+    - south-america
     steps:
       - uses: actions/checkout@v2
       - name: Publish Release
