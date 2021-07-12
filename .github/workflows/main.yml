@@ -53,7 +53,7 @@ jobs:
           
       - name: Upload Artifact
         run: |
-          gh release upload $(date -I) africa-${{ matrix.subregion }}-$(date -I).bin
+          hub release edit $(date -I) --attach africa-${{ matrix.subregion }}-$(date -I).bin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
@@ -81,7 +81,7 @@ jobs:
           
       - name: Upload Artifact
         run: |
-          gh release upload $(date -I) antarctica-$(date -I).bin
+          hub release edit $(date -I) --attach antarctica-$(date -I).bin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
@@ -112,7 +112,7 @@ jobs:
           
       - name: Upload Artifact
         run: |
-          gh release upload $(date -I) asia-${{ matrix.subregion }}-$(date -I).bin
+          hub release edit $(date -I) --attach asia-${{ matrix.subregion }}-$(date -I).bin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
@@ -143,7 +143,7 @@ jobs:
           
       - name: Upload Artifact
         run: |
-          gh release upload $(date -I) australia-oceania-${{ matrix.subregion }}-$(date -I).bin
+          hub release edit $(date -I) --attach australia-oceania-${{ matrix.subregion }}-$(date -I).bin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
@@ -174,7 +174,7 @@ jobs:
           
       - name: Upload Artifact
         run: |
-          gh release upload $(date -I) central-america-${{ matrix.subregion }}-$(date -I).bin
+          hub release edit $(date -I) --attach central-america-${{ matrix.subregion }}-$(date -I).bin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   
@@ -205,7 +205,7 @@ jobs:
           
       - name: Upload Artifact
         run: |
-          gh release upload $(date -I) europe-france-${{ matrix.subregion }}-$(date -I).bin
+          hub release edit $(date -I) --attach europe-france-${{ matrix.subregion }}-$(date -I).bin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   
@@ -236,7 +236,7 @@ jobs:
           
       - name: Upload Artifact
         run: |
-          gh release upload $(date -I) europe-germany-${{ matrix.subregion }}-$(date -I).bin
+          hub release edit $(date -I) --attach europe-germany-${{ matrix.subregion }}-$(date -I).bin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   
@@ -267,7 +267,7 @@ jobs:
           
       - name: Upload Artifact
         run: |
-          gh release upload $(date -I) europe-great-britain-${{ matrix.subregion }}-$(date -I).bin
+          hub release edit $(date -I) --attach europe-great-britain-${{ matrix.subregion }}-$(date -I).bin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   
@@ -299,7 +299,7 @@ jobs:
           
       - name: Upload Artifact
         run: |
-          gh release upload $(date -I) europe-italy-${{ matrix.subregion }}-$(date -I).bin
+          hub release edit $(date -I) --attach europe-italy-${{ matrix.subregion }}-$(date -I).bin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -331,7 +331,7 @@ jobs:
           
       - name: Upload Artifact
         run: |
-          gh release upload $(date -I) europe-netherlands-${{ matrix.subregion }}-$(date -I).bin
+          hub release edit $(date -I) --attach europe-netherlands-${{ matrix.subregion }}-$(date -I).bin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -362,7 +362,7 @@ jobs:
           
       - name: Upload Artifact
         run: |
-          gh release upload $(date -I) europe-poland-${{ matrix.subregion }}-$(date -I).bin
+          hub release edit $(date -I) --attach europe-poland-${{ matrix.subregion }}-$(date -I).bin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   
@@ -393,7 +393,7 @@ jobs:
           
       - name: Upload Artifact
         run: |
-          gh release upload $(date -I) central-america-${{ matrix.subregion }}-$(date -I).bin
+          hub release edit $(date -I) --attach central-america-${{ matrix.subregion }}-$(date -I).bin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
  
@@ -424,7 +424,7 @@ jobs:
           
       - name: Upload Artifact
         run: |
-          gh release upload $(date -I) north-america-canada-${{ matrix.subregion }}-$(date -I).bin
+          hub release edit $(date -I) --attach north-america-canada-${{ matrix.subregion }}-$(date -I).bin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
@@ -455,7 +455,7 @@ jobs:
           
       - name: Upload Artifact
         run: |
-          gh release upload $(date -I) north-america-us-${{ matrix.subregion }}-$(date -I).bin
+          hub release edit $(date -I) --attach north-america-us-${{ matrix.subregion }}-$(date -I).bin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
  
@@ -486,7 +486,7 @@ jobs:
           
       - name: Upload Artifact
         run: |
-          gh release upload $(date -I) north-america-${{ matrix.subregion }}-$(date -I).bin
+          hub release edit $(date -I) --attach north-america-${{ matrix.subregion }}-$(date -I).bin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -517,7 +517,7 @@ jobs:
           
       - name: Upload Artifact
         run: |
-          gh release upload $(date -I) south-america-brazil-${{ matrix.subregion }}-$(date -I).bin
+          hub release edit $(date -I) --attach south-america-brazil-${{ matrix.subregion }}-$(date -I).bin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -548,7 +548,7 @@ jobs:
           
       - name: Upload Artifact
         run: |
-          gh release upload $(date -I) south-america-${{ matrix.subregion }}-$(date -I).bin
+          hub release edit $(date -I) --attach south-america-${{ matrix.subregion }}-$(date -I).bin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
