@@ -24,11 +24,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Create Release
-        run: |
-          gh release create $(date -I) --title "$(date -I)" --notes "Automatically Processed Maps from $(date -I)"  || true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Get current date as Tag name
+        run: echo "::set-output name=tag_name::$(date +'%Y-%m-%d')"
+      - uses: actions/github-script@v4
+        with:
+          script: |
+            release = await github.repos.createRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag_name: ${{steps.prepare.outputs.tag_name}},
+            });
+            const { id, html_url, upload_url } = release.data;
+            core.setOutput('id', id);
+            core.setOutput('html_url', html_url);
+            core.setOutput('upload_url', upload_url);
+            core.setOutput('tag', tag);
+      #- name: Create Release
+      #  run: |
+      #    gh release create $(date -I) --title "$(date -I)" --notes "Automatically Processed Maps from $(date -I)"  || true
+      #  env:
+      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
   africa:
     needs: prepare
@@ -56,10 +71,15 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf africa-${{ matrix.subregion }}-$(date -I).bin
           
       - name: Upload Artifact
-        run: |
-          hub release edit $(date -I) --attach africa-${{ matrix.subregion }}-$(date -I).bin
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/github-script@v4
+        with:
+          script: |
+            await github.repos.uploadReleaseAsset({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: ${{steps.prepare.outputs.id}},
+              data: await fs.readFileSync(`africa-${{ matrix.subregion }}-${{steps.prepare.outputs.tag_name}}.bin`)
+            });
           
   antarctica:
     needs: prepare
@@ -84,10 +104,15 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i antarctica-latest.osm.pbf antarctica-$(date -I).bin
           
       - name: Upload Artifact
-        run: |
-          hub release edit $(date -I) --attach antarctica-$(date -I).bin
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/github-script@v4
+        with:
+          script: |
+            await github.repos.uploadReleaseAsset({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: ${{steps.prepare.outputs.id}},
+              data: await fs.readFileSync(`antarctica-${{steps.prepare.outputs.tag_name}}.bin`)
+            });
           
   asia:
     needs: prepare
@@ -115,10 +140,15 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf asia-${{ matrix.subregion }}-$(date -I).bin
           
       - name: Upload Artifact
-        run: |
-          hub release edit $(date -I) --attach asia-${{ matrix.subregion }}-$(date -I).bin
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/github-script@v4
+        with:
+          script: |
+            await github.repos.uploadReleaseAsset({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: ${{steps.prepare.outputs.id}},
+              data: await fs.readFileSync(`asia-${{ matrix.subregion }}-${{steps.prepare.outputs.tag_name}}.bin`)
+            });
           
   australia-oceania:
     needs: prepare
@@ -146,10 +176,15 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf australia-oceania-${{ matrix.subregion }}-$(date -I).bin
           
       - name: Upload Artifact
-        run: |
-          hub release edit $(date -I) --attach australia-oceania-${{ matrix.subregion }}-$(date -I).bin
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/github-script@v4
+        with:
+          script: |
+            await github.repos.uploadReleaseAsset({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: ${{steps.prepare.outputs.id}},
+              data: await fs.readFileSync(`australia-oceania-${{ matrix.subregion }}-${{steps.prepare.outputs.tag_name}}.bin`)
+            });
           
   central-america:
     needs: prepare
@@ -177,10 +212,15 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf central-america-${{ matrix.subregion }}-$(date -I).bin
           
       - name: Upload Artifact
-        run: |
-          hub release edit $(date -I) --attach central-america-${{ matrix.subregion }}-$(date -I).bin
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/github-script@v4
+        with:
+          script: |
+            await github.repos.uploadReleaseAsset({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: ${{steps.prepare.outputs.id}},
+              data: await fs.readFileSync(`central-america-${{ matrix.subregion }}-${{steps.prepare.outputs.tag_name}}.bin`)
+            });
   
   france:
     needs: prepare
@@ -208,10 +248,15 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-france-${{ matrix.subregion }}-$(date -I).bin
           
       - name: Upload Artifact
-        run: |
-          hub release edit $(date -I) --attach europe-france-${{ matrix.subregion }}-$(date -I).bin
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/github-script@v4
+        with:
+          script: |
+            await github.repos.uploadReleaseAsset({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: ${{steps.prepare.outputs.id}},
+              data: await fs.readFileSync(`europe-france-${{ matrix.subregion }}-${{steps.prepare.outputs.tag_name}}.bin`)
+            });
   
   germany:
     needs: prepare
@@ -239,10 +284,15 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-germany-${{ matrix.subregion }}-$(date -I).bin
           
       - name: Upload Artifact
-        run: |
-          hub release edit $(date -I) --attach europe-germany-${{ matrix.subregion }}-$(date -I).bin
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/github-script@v4
+        with:
+          script: |
+            await github.repos.uploadReleaseAsset({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: ${{steps.prepare.outputs.id}},
+              data: await fs.readFileSync(`europe-germany-${{ matrix.subregion }}-${{steps.prepare.outputs.tag_name}}.bin`)
+            });
   
   great-britain:
     needs: prepare
@@ -269,11 +319,17 @@ jobs:
         run: |
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-great-britain-${{ matrix.subregion }}-$(date -I).bin
           
+      
       - name: Upload Artifact
-        run: |
-          hub release edit $(date -I) --attach europe-great-britain-${{ matrix.subregion }}-$(date -I).bin
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/github-script@v4
+        with:
+          script: |
+            await github.repos.uploadReleaseAsset({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: ${{steps.prepare.outputs.id}},
+              data: await fs.readFileSync(`europe-great-britain-${{ matrix.subregion }}-${{steps.prepare.outputs.tag_name}}.bin`)
+            });
   
   
   italy:
@@ -302,10 +358,15 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-italy-${{ matrix.subregion }}-$(date -I).bin
           
       - name: Upload Artifact
-        run: |
-          hub release edit $(date -I) --attach europe-italy-${{ matrix.subregion }}-$(date -I).bin
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/github-script@v4
+        with:
+          script: |
+            await github.repos.uploadReleaseAsset({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: ${{steps.prepare.outputs.id}},
+              data: await fs.readFileSync(`europe-italy-${{ matrix.subregion }}-${{steps.prepare.outputs.tag_name}}.bin`)
+            });
 
 
   netherlands:
@@ -334,10 +395,15 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-netherlands-${{ matrix.subregion }}-$(date -I).bin
           
       - name: Upload Artifact
-        run: |
-          hub release edit $(date -I) --attach europe-netherlands-${{ matrix.subregion }}-$(date -I).bin
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/github-script@v4
+        with:
+          script: |
+            await github.repos.uploadReleaseAsset({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: ${{steps.prepare.outputs.id}},
+              data: await fs.readFileSync(`europe-netherlands-${{ matrix.subregion }}-${{steps.prepare.outputs.tag_name}}.bin`)
+            });
 
   poland:
     needs: prepare
@@ -365,10 +431,15 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-poland-${{ matrix.subregion }}-$(date -I).bin
           
       - name: Upload Artifact
-        run: |
-          hub release edit $(date -I) --attach europe-poland-${{ matrix.subregion }}-$(date -I).bin
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/github-script@v4
+        with:
+          script: |
+            await github.repos.uploadReleaseAsset({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: ${{steps.prepare.outputs.id}},
+              data: await fs.readFileSync(`europe-poland-${{ matrix.subregion }}-${{steps.prepare.outputs.tag_name}}.bin`)
+            });
   
   europe_other:
     needs: prepare
@@ -396,10 +467,15 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-${{ matrix.subregion }}-$(date -I).bin
           
       - name: Upload Artifact
-        run: |
-          hub release edit $(date -I) --attach europe-${{ matrix.subregion }}-$(date -I).bin
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/github-script@v4
+        with:
+          script: |
+            await github.repos.uploadReleaseAsset({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: ${{steps.prepare.outputs.id}},
+              data: await fs.readFileSync(`europe-${{ matrix.subregion }}-${{steps.prepare.outputs.tag_name}}.bin`)
+            });
  
   canada:
     needs: prepare
@@ -427,10 +503,15 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf north-america-canada-${{ matrix.subregion }}-$(date -I).bin
           
       - name: Upload Artifact
-        run: |
-          hub release edit $(date -I) --attach north-america-canada-${{ matrix.subregion }}-$(date -I).bin
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/github-script@v4
+        with:
+          script: |
+            await github.repos.uploadReleaseAsset({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: ${{steps.prepare.outputs.id}},
+              data: await fs.readFileSync(`north-america-canada-${{ matrix.subregion }}-${{steps.prepare.outputs.tag_name}}.bin`)
+            });
           
   us:
     needs: prepare
@@ -458,10 +539,15 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf north-america-us-${{ matrix.subregion }}-$(date -I).bin
           
       - name: Upload Artifact
-        run: |
-          hub release edit $(date -I) --attach north-america-us-${{ matrix.subregion }}-$(date -I).bin
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/github-script@v4
+        with:
+          script: |
+            await github.repos.uploadReleaseAsset({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: ${{steps.prepare.outputs.id}},
+              data: await fs.readFileSync(`north-america-us-${{ matrix.subregion }}-${{steps.prepare.outputs.tag_name}}.bin`)
+            });
  
   north-america_other:
     needs: prepare
@@ -489,10 +575,15 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf north-america-${{ matrix.subregion }}-$(date -I).bin
           
       - name: Upload Artifact
-        run: |
-          hub release edit $(date -I) --attach north-america-${{ matrix.subregion }}-$(date -I).bin
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/github-script@v4
+        with:
+          script: |
+            await github.repos.uploadReleaseAsset({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: ${{steps.prepare.outputs.id}},
+              data: await fs.readFileSync(`north-america-${{ matrix.subregion }}-${{steps.prepare.outputs.tag_name}}.bin`)
+            });
 
   brazil:
     needs: prepare
@@ -520,10 +611,15 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf south-america-brazil-${{ matrix.subregion }}-$(date -I).bin
           
       - name: Upload Artifact
-        run: |
-          hub release edit $(date -I) --attach south-america-brazil-${{ matrix.subregion }}-$(date -I).bin
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/github-script@v4
+        with:
+          script: |
+            await github.repos.uploadReleaseAsset({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: ${{steps.prepare.outputs.id}},
+              data: await fs.readFileSync(`south-america-brazil-${{ matrix.subregion }}-${{steps.prepare.outputs.tag_name}}.bin`)
+            });
 
   south-america_other:
     needs: prepare
@@ -551,10 +647,15 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf south-america-${{ matrix.subregion }}-$(date -I).bin
           
       - name: Upload Artifact
-        run: |
-          hub release edit $(date -I) --attach south-america-${{ matrix.subregion }}-$(date -I).bin
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/github-script@v4
+        with:
+          script: |
+            await github.repos.uploadReleaseAsset({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: ${{steps.prepare.outputs.id}},
+              data: await fs.readFileSync(`south-america-${{ matrix.subregion }}-${{steps.prepare.outputs.tag_name}}.bin`)
+            });
 
   europe:
     needs: 
