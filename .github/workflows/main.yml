@@ -24,12 +24,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Get current date as Tag name
-        run: echo "::set-output name=tag_name::$(date +'%Y-%m-%d')"
       - uses: actions/github-script@v4
         with:
           script: |
-            tag = new Date().toISOString().replace(/[T:]/g, '-').split('.')[0]
+            tag = new Date().toISOString().slice(0, 10)
             release = await github.repos.createRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -39,7 +37,7 @@ jobs:
             core.setOutput('id', id);
             core.setOutput('html_url', html_url);
             core.setOutput('upload_url', upload_url);
-            core.setOutput('tag', tag);
+            core.setOutput('tag_name', tag);
       #- name: Create Release
       #  run: |
       #    gh release create $(date -I) --title "$(date -I)" --notes "Automatically Processed Maps from $(date -I)"  || true
