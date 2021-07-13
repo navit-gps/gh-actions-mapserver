@@ -29,10 +29,11 @@ jobs:
       - uses: actions/github-script@v4
         with:
           script: |
+            tag = new Date().toISOString().replace(/[T:]/g, '-').split('.')[0]
             release = await github.repos.createRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              tag_name: ${{steps.prepare.outputs.tag_name}},
+              tag_name: tag,
             });
             const { id, html_url, upload_url } = release.data;
             core.setOutput('id', id);
