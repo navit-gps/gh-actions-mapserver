@@ -86,6 +86,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               release_id: ${{needs.prepare.outputs.id}},
+              name: africa-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin,
               data: await fs.readFileSync(`africa-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin`)
             });
           
@@ -120,6 +121,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               release_id: ${{needs.prepare.outputs.id}},
+              name: antarctica-${{needs.prepare.outputs.tag_name}}.bin,
               data: await fs.readFileSync(`antarctica-${{needs.prepare.outputs.tag_name}}.bin`)
             });
           
@@ -157,6 +159,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               release_id: ${{needs.prepare.outputs.id}},
+              name: asia-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin,
               data: await fs.readFileSync(`asia-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin`)
             });
           
@@ -194,6 +197,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               release_id: ${{needs.prepare.outputs.id}},
+              name: australia-oceania-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin,
               data: await fs.readFileSync(`australia-oceania-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin`)
             });
           
@@ -231,6 +235,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               release_id: ${{needs.prepare.outputs.id}},
+              name: central-america-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin,
               data: await fs.readFileSync(`central-america-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin`)
             });
   
@@ -268,6 +273,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               release_id: ${{needs.prepare.outputs.id}},
+              name: europe-france-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin,
               data: await fs.readFileSync(`europe-france-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin`)
             });
   
@@ -305,6 +311,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               release_id: ${{needs.prepare.outputs.id}},
+              name: europe-germany-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin,
               data: await fs.readFileSync(`europe-germany-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin`)
             });
   
@@ -343,6 +350,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               release_id: ${{needs.prepare.outputs.id}},
+              name: europe-great-britain-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin,
               data: await fs.readFileSync(`europe-great-britain-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin`)
             });
   
@@ -381,6 +389,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               release_id: ${{needs.prepare.outputs.id}},
+              name: europe-italy-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin,
               data: await fs.readFileSync(`europe-italy-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin`)
             });
 
@@ -419,6 +428,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               release_id: ${{needs.prepare.outputs.id}},
+              name: europe-netherlands-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin,
               data: await fs.readFileSync(`europe-netherlands-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin`)
             });
 
@@ -456,6 +466,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               release_id: ${{needs.prepare.outputs.id}},
+              name: europe-poland-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin,
               data: await fs.readFileSync(`europe-poland-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin`)
             });
   
@@ -493,6 +504,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               release_id: ${{needs.prepare.outputs.id}},
+              name: europe-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin,
               data: await fs.readFileSync(`europe-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin`)
             });
  
@@ -530,6 +542,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               release_id: ${{needs.prepare.outputs.id}},
+              name: north-america-canada-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin,
               data: await fs.readFileSync(`north-america-canada-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin`)
             });
           
@@ -567,6 +580,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               release_id: ${{needs.prepare.outputs.id}},
+              name: north-america-us-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin,
               data: await fs.readFileSync(`north-america-us-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin`)
             });
  
@@ -604,6 +618,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               release_id: ${{needs.prepare.outputs.id}},
+              name: north-america-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin,
               data: await fs.readFileSync(`north-america-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin`)
             });
 
@@ -641,6 +656,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               release_id: ${{needs.prepare.outputs.id}},
+              name: south-america-brazil-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin,
               data: await fs.readFileSync(`south-america-brazil-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin`)
             });
 
@@ -678,6 +694,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               release_id: ${{needs.prepare.outputs.id}},
+              name: south-america-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin,
               data: await fs.readFileSync(`south-america-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin`)
             });
 
