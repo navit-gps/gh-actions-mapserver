@@ -31,9 +31,9 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/github-script@v4
         id: vars
-        with: # new Date().toISOString().slice(0, 10)
+        with:
           script: |
-            tag = new Date().toISOString()
+            tag = new Date().toISOString().slice(0, 10)
             release = await github.repos.createRelease({
               draft: true
               owner: context.repo.owner,
