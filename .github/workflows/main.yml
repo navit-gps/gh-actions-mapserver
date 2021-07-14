@@ -81,6 +81,7 @@ jobs:
         uses: actions/github-script@v4
         with:
           script: |
+            const fs = require('fs');
             await github.repos.uploadReleaseAsset({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -114,6 +115,7 @@ jobs:
         uses: actions/github-script@v4
         with:
           script: |
+            const fs = require('fs');
             await github.repos.uploadReleaseAsset({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -150,6 +152,7 @@ jobs:
         uses: actions/github-script@v4
         with:
           script: |
+            const fs = require('fs');
             await github.repos.uploadReleaseAsset({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -186,6 +189,7 @@ jobs:
         uses: actions/github-script@v4
         with:
           script: |
+            const fs = require('fs');
             await github.repos.uploadReleaseAsset({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -222,6 +226,7 @@ jobs:
         uses: actions/github-script@v4
         with:
           script: |
+            const fs = require('fs');
             await github.repos.uploadReleaseAsset({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -258,6 +263,7 @@ jobs:
         uses: actions/github-script@v4
         with:
           script: |
+            const fs = require('fs');
             await github.repos.uploadReleaseAsset({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -294,6 +300,7 @@ jobs:
         uses: actions/github-script@v4
         with:
           script: |
+            const fs = require('fs');
             await github.repos.uploadReleaseAsset({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -331,6 +338,7 @@ jobs:
         uses: actions/github-script@v4
         with:
           script: |
+            const fs = require('fs');
             await github.repos.uploadReleaseAsset({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -368,6 +376,7 @@ jobs:
         uses: actions/github-script@v4
         with:
           script: |
+            const fs = require('fs');
             await github.repos.uploadReleaseAsset({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -405,6 +414,7 @@ jobs:
         uses: actions/github-script@v4
         with:
           script: |
+            const fs = require('fs');
             await github.repos.uploadReleaseAsset({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -441,6 +451,7 @@ jobs:
         uses: actions/github-script@v4
         with:
           script: |
+            const fs = require('fs');
             await github.repos.uploadReleaseAsset({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -477,6 +488,7 @@ jobs:
         uses: actions/github-script@v4
         with:
           script: |
+            const fs = require('fs');
             await github.repos.uploadReleaseAsset({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -513,6 +525,7 @@ jobs:
         uses: actions/github-script@v4
         with:
           script: |
+            const fs = require('fs');
             await github.repos.uploadReleaseAsset({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -549,6 +562,7 @@ jobs:
         uses: actions/github-script@v4
         with:
           script: |
+            const fs = require('fs');
             await github.repos.uploadReleaseAsset({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -585,6 +599,7 @@ jobs:
         uses: actions/github-script@v4
         with:
           script: |
+            const fs = require('fs');
             await github.repos.uploadReleaseAsset({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -621,6 +636,7 @@ jobs:
         uses: actions/github-script@v4
         with:
           script: |
+            const fs = require('fs');
             await github.repos.uploadReleaseAsset({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -657,6 +673,7 @@ jobs:
         uses: actions/github-script@v4
         with:
           script: |
+            const fs = require('fs');
             await github.repos.uploadReleaseAsset({
               owner: context.repo.owner,
               repo: context.repo.repo,
