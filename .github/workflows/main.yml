@@ -34,10 +34,12 @@ jobs:
         with:
           script: |
             tag = new Date().toISOString().slice(0, 10)
+            tag = new Date().toISOString()
             release = await github.repos.createRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
               tag_name: tag,
+              draft: true,
             });
             const { id, html_url, upload_url } = release.data;
             core.setOutput('id', id);
