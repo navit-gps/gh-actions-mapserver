@@ -22,12 +22,18 @@ jobs:
   # This workflow contains a single job called "build"
   prepare:
     runs-on: ubuntu-latest
+    outputs:
+      id: ${{ steps.vars.outputs.id }}
+      html_url: ${{ steps.vars.outputs.html_url }}
+      upload_url: ${{ steps.vars.outputs.upload_url }}
+      tag_name: ${{ steps.vars.outputs.tag_name }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/github-script@v4
+        id: vars
         with:
           script: |
-            tag = new Date().toISOString().slice(0, 10)
+            tag = new Date().toISOString() # .slice(0, 10)
             release = await github.repos.createRelease({
               draft: true
               owner: context.repo.owner,
