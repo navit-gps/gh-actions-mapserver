@@ -75,7 +75,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf africa-${{ matrix.subregion }}-$(date -I).bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf africa-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
@@ -109,7 +109,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i antarctica-latest.osm.pbf antarctica-$(date -I).bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i antarctica-latest.osm.pbf antarctica-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
@@ -146,7 +146,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf asia-${{ matrix.subregion }}-$(date -I).bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf asia-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
@@ -183,7 +183,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf australia-oceania-${{ matrix.subregion }}-$(date -I).bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf australia-oceania-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
@@ -220,7 +220,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf central-america-${{ matrix.subregion }}-$(date -I).bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf central-america-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
@@ -257,7 +257,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-france-${{ matrix.subregion }}-$(date -I).bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-france-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
@@ -294,7 +294,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-germany-${{ matrix.subregion }}-$(date -I).bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-germany-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
@@ -331,7 +331,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-great-britain-${{ matrix.subregion }}-$(date -I).bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-great-britain-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       
       - name: Upload Artifact
@@ -370,7 +370,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-italy-${{ matrix.subregion }}-$(date -I).bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-italy-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
@@ -408,7 +408,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-netherlands-${{ matrix.subregion }}-$(date -I).bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-netherlands-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
@@ -445,7 +445,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-poland-${{ matrix.subregion }}-$(date -I).bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-poland-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
@@ -482,7 +482,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-${{ matrix.subregion }}-$(date -I).bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
@@ -519,7 +519,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf north-america-canada-${{ matrix.subregion }}-$(date -I).bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf north-america-canada-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
@@ -556,7 +556,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf north-america-us-${{ matrix.subregion }}-$(date -I).bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf north-america-us-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
@@ -593,7 +593,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf north-america-${{ matrix.subregion }}-$(date -I).bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf north-america-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
@@ -630,7 +630,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf south-america-brazil-${{ matrix.subregion }}-$(date -I).bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf south-america-brazil-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
@@ -667,7 +667,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf south-america-${{ matrix.subregion }}-$(date -I).bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf south-america-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
