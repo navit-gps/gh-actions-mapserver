@@ -40,6 +40,8 @@ jobs:
               repo: context.repo.repo,
               tag_name: tag,
               draft: true,
+              name: tag,
+              body: "Automatically converted Maps",
             });
             const { id, html_url, upload_url } = release.data;
             core.setOutput('id', id);
