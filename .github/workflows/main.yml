@@ -64,7 +64,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -75,7 +75,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf africa-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf africa-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
@@ -99,7 +99,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -110,7 +110,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i antarctica-latest.osm.pbf antarctica-${{needs.prepare.outputs.tag_name}}.bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i antarctica-latest.osm.pbf antarctica-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
@@ -137,7 +137,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -148,7 +148,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf asia-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf asia-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
@@ -175,7 +175,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -186,7 +186,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf australia-oceania-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf australia-oceania-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
@@ -213,7 +213,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -224,7 +224,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf central-america-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf central-america-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
@@ -251,7 +251,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -262,7 +262,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-france-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf europe-france-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
@@ -289,7 +289,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -300,7 +300,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-germany-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf europe-germany-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
@@ -327,7 +327,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -338,7 +338,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-great-britain-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf europe-great-britain-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       
       - name: Upload Artifact
@@ -367,7 +367,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -378,7 +378,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-italy-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf europe-italy-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
@@ -406,7 +406,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -417,7 +417,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-netherlands-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf europe-netherlands-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
@@ -444,7 +444,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -455,7 +455,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-poland-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf europe-poland-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
@@ -482,7 +482,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -493,7 +493,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf europe-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
@@ -520,7 +520,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -531,7 +531,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf north-america-canada-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf north-america-canada-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
@@ -558,7 +558,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -569,7 +569,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf north-america-us-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf north-america-us-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
@@ -596,7 +596,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -607,7 +607,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf north-america-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf north-america-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
@@ -634,7 +634,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -645,7 +645,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf south-america-brazil-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf south-america-brazil-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
@@ -672,7 +672,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23361-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -683,7 +683,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf south-america-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf south-america-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
