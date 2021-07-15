@@ -735,6 +735,7 @@ jobs:
   post:
     runs-on: ubuntu-latest
     needs:
+    - prepare
     - africa
     - antarctica
     - asia
