@@ -34,7 +34,6 @@ jobs:
         with:
           script: |
             tag = new Date().toISOString().slice(0, 10)
-            tag = new Date().toISOString()
             release = await github.repos.createRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
