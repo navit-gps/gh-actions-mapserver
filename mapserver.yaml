@@ -1,0 +1,26 @@
+openapi: 3.0.0
+info: 
+  title: "Navit Mapserver"
+  version: "v2"
+  description: API for serving preconverted Mapdata to Navit Users
+
+paths:
+  /areas:
+    get:
+      description: Get List of all Areas
+      responses:
+        "200":
+          description: List of the areas
+  /
+  /download:
+    get:
+      description: Download an area
+      responses:
+        "200":
+          description: File stream
+  /filesize:
+    get:
+      description: Get Filesize if an Area
+      responses:
+        "200":
+          description: Filesize
