@@ -11,7 +11,6 @@ paths:
       responses:
         "200":
           description: List of the areas
-  /
   /download:
     get:
       description: Download an area
