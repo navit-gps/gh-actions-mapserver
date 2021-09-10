@@ -65,7 +65,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -100,7 +100,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -138,7 +138,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -176,7 +176,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -214,7 +214,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -252,7 +252,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -290,7 +290,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -328,7 +328,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -368,7 +368,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -407,7 +407,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -445,7 +445,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -483,7 +483,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -521,7 +521,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -559,7 +559,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -597,7 +597,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -635,7 +635,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
@@ -673,7 +673,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          wget "https://23404-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
+          wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
           mkdir navit
           ./navit.sh --skip-license --prefix=navit
