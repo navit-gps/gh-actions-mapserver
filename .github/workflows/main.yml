@@ -793,8 +793,6 @@ jobs:
   
   post:
     runs-on: ubuntu-latest
-    container:
-      image: debian
     needs:
     - prepare
     - africa
