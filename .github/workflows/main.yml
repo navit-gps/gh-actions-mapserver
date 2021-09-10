@@ -72,7 +72,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget https://download.geofabrik.de/africa/${{ matrix.subregion }}-latest.osm.pbf
+          wget --verbose --tries=10 https://download.geofabrik.de/africa/${{ matrix.subregion }}-latest.osm.pbf
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -107,7 +107,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget https://download.geofabrik.de/antarctica-latest.osm.pbf
+          wget --verbose --tries=10 https://download.geofabrik.de/antarctica-latest.osm.pbf
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -145,7 +145,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget https://download.geofabrik.de/asia/${{ matrix.subregion }}-latest.osm.pbf
+          wget --verbose --tries=10 https://download.geofabrik.de/asia/${{ matrix.subregion }}-latest.osm.pbf
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -183,7 +183,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget https://download.geofabrik.de/australia-oceania/${{ matrix.subregion }}-latest.osm.pbf
+          wget --verbose --tries=10 https://download.geofabrik.de/australia-oceania/${{ matrix.subregion }}-latest.osm.pbf
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -221,7 +221,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget https://download.geofabrik.de/central-america/${{ matrix.subregion }}-latest.osm.pbf
+          wget --verbose --tries=10 https://download.geofabrik.de/central-america/${{ matrix.subregion }}-latest.osm.pbf
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -259,7 +259,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget https://download.geofabrik.de/europe/france/${{ matrix.subregion }}-latest.osm.pbf
+          wget --verbose --tries=10 https://download.geofabrik.de/europe/france/${{ matrix.subregion }}-latest.osm.pbf
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -297,7 +297,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget https://download.geofabrik.de/europe/germany/${{ matrix.subregion }}-latest.osm.pbf
+          wget --verbose --tries=10 https://download.geofabrik.de/europe/germany/${{ matrix.subregion }}-latest.osm.pbf
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -335,7 +335,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget https://download.geofabrik.de/europe/great-britain/${{ matrix.subregion }}-latest.osm.pbf
+          wget --verbose --tries=10 https://download.geofabrik.de/europe/great-britain/${{ matrix.subregion }}-latest.osm.pbf
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -375,7 +375,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget https://download.geofabrik.de/europe/italy/${{ matrix.subregion }}-latest.osm.pbf
+          wget --verbose --tries=10 https://download.geofabrik.de/europe/italy/${{ matrix.subregion }}-latest.osm.pbf
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -414,7 +414,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget https://download.geofabrik.de/europe/netherlands/${{ matrix.subregion }}-latest.osm.pbf
+          wget --verbose --tries=10 https://download.geofabrik.de/europe/netherlands/${{ matrix.subregion }}-latest.osm.pbf
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -452,7 +452,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget https://download.geofabrik.de/europe/poland/${{ matrix.subregion }}-latest.osm.pbf
+          wget --verbose --tries=10 https://download.geofabrik.de/europe/poland/${{ matrix.subregion }}-latest.osm.pbf
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -490,7 +490,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget https://download.geofabrik.de/europe/${{ matrix.subregion }}-latest.osm.pbf
+          wget --verbose --tries=10 https://download.geofabrik.de/europe/${{ matrix.subregion }}-latest.osm.pbf
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -528,7 +528,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget https://download.geofabrik.de/north-america/canada/${{ matrix.subregion }}-latest.osm.pbf
+          wget --verbose --tries=10 https://download.geofabrik.de/north-america/canada/${{ matrix.subregion }}-latest.osm.pbf
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -566,7 +566,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget https://download.geofabrik.de/north-america/us/${{ matrix.subregion }}-latest.osm.pbf
+          wget --verbose --tries=10 https://download.geofabrik.de/north-america/us/${{ matrix.subregion }}-latest.osm.pbf
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -604,7 +604,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget https://download.geofabrik.de/north-america/${{ matrix.subregion }}-latest.osm.pbf
+          wget --verbose --tries=10 https://download.geofabrik.de/north-america/${{ matrix.subregion }}-latest.osm.pbf
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -642,7 +642,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget https://download.geofabrik.de/south-america/brazil/${{ matrix.subregion }}-latest.osm.pbf
+          wget --verbose --tries=10 https://download.geofabrik.de/south-america/brazil/${{ matrix.subregion }}-latest.osm.pbf
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -680,7 +680,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget https://download.geofabrik.de/south-america/${{ matrix.subregion }}-latest.osm.pbf
+          wget --verbose --tries=10 https://download.geofabrik.de/south-america/${{ matrix.subregion }}-latest.osm.pbf
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
