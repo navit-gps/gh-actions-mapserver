@@ -17,13 +17,10 @@ on:
   workflow_dispatch:
 
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
   prepare:
     runs-on: ubuntu-latest
-    container:
-      image: debian
     outputs:
       id: ${{ steps.vars.outputs.id }}
       html_url: ${{ steps.vars.outputs.html_url }}
@@ -58,8 +55,6 @@ jobs:
   africa:
     needs: prepare
     runs-on: ubuntu-latest
-    container:
-      image: debian
     strategy:
       matrix:
         subregion: ["algeria", "angola", "benin", "botswana", "burkina-faso", "burundi", "cameroon", "canary-islands", "cape-verde", "central-african-republic", "chad", "comores", "congo-brazzaville", "congo-democratic-republic", "djibouti", "egypt", "equatorial-guinea", "eritrea", "ethiopia", "gabon", "ghana", "guinea", "guinea-bissau", "ivory-coast", "kenya", "lesotho", "liberia", "libya", "madagascar", "malawi", "mali", "mauritania", "mauritius", "morocco", "mozambique", "namibia", "niger", "nigeria", "rwanda", "saint-helena-ascension-and-tristan-da-cunha", "sao-tome-and-principe", "senegal-and-gambia", "seychelles", "sierra-leone", "somalia", "south-africa", "south-sudan", "sudan", "swaziland", "tanzania", "togo", "tunisia", "uganda", "zambia", "zimbabwe"]
@@ -68,7 +63,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Setup maptool
         run: |
-          apt update && apt install -y wget maptool
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
@@ -77,7 +71,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget --verbose --tries=10 https://download.geofabrik.de/africa/${{ matrix.subregion }}-latest.osm.pbf
+          for i in {1..10}; do wget https://download.geofabrik.de/africa/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -99,14 +93,11 @@ jobs:
   antarctica:
     needs: prepare
     runs-on: ubuntu-latest
-    container:
-      image: debian
     
     steps:
       - uses: actions/checkout@v2
       - name: Setup maptool
         run: |
-          apt update && apt install -y wget maptool
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
@@ -115,7 +106,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget --verbose --tries=10 https://download.geofabrik.de/antarctica-latest.osm.pbf
+          for i in {1..10}; do wget https://download.geofabrik.de/antarctica-latest.osm.pbf && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -137,8 +128,6 @@ jobs:
   asia:
     needs: prepare
     runs-on: ubuntu-latest
-    container:
-      image: debian
     strategy:
       matrix:
         subregion: ["afghanistan", "armenia", "azerbaijan", "bangladesh", "bhutan", "cambodia", "china", "gcc-states", "india", "indonesia", "iran", "iraq", "israel-and-palestine", "japan", "jordan", "kazakhstan", "kyrgyzstan", "laos", "lebanon", "malaysia-singapore-brunei", "maldives", "mongolia", "myanmar", "nepal", "north-korea", "pakistan", "philippines", "south-korea", "sri-lanka", "syria", "taiwan", "tajikistan", "thailand", "turkmenistan", "uzbekistan", "vietnam", "yemen"]
@@ -147,7 +136,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Setup maptool
         run: |
-          apt update && apt install -y wget maptool
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
@@ -156,7 +144,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget --verbose --tries=10 https://download.geofabrik.de/asia/${{ matrix.subregion }}-latest.osm.pbf
+          for i in {1..10}; do wget https://download.geofabrik.de/asia/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -178,8 +166,6 @@ jobs:
   australia-oceania:
     needs: prepare
     runs-on: ubuntu-latest
-    container:
-      image: debian
     strategy:
       matrix:
         subregion: ["american-oceania", "australia", "cook-islands", "fiji", "ile-de-clipperton", "kiribati", "marshall-islands", "micronesia", "nauru", "new-caledonia", "new-zealand", "niue", "palau", "papua-new-guinea", "pitcairn-islands", "polynesie-francaise", "samoa", "solomon-islands", "tokelau", "tonga", "tuvalu", "vanuatu", "wallis-et-futuna"]
@@ -188,7 +174,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Setup maptool
         run: |
-          apt update && apt install -y wget maptool
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
@@ -197,7 +182,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget --verbose --tries=10 https://download.geofabrik.de/australia-oceania/${{ matrix.subregion }}-latest.osm.pbf
+          for i in {1..10}; do wget https://download.geofabrik.de/australia-oceania/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -219,8 +204,6 @@ jobs:
   central-america:
     needs: prepare
     runs-on: ubuntu-latest
-    container:
-      image: debian
     strategy:
       matrix:
         subregion: ["bahamas", "belize", "costa-rica", "cuba", "el-salvador", "guatemala", "haiti-and-domrep", "honduras", "jamaica", "nicaragua"]
@@ -229,7 +212,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Setup maptool
         run: |
-          apt update && apt install -y wget maptool
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
@@ -238,7 +220,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget --verbose --tries=10 https://download.geofabrik.de/central-america/${{ matrix.subregion }}-latest.osm.pbf
+          for i in {1..10}; do wget https://download.geofabrik.de/central-america/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -260,8 +242,6 @@ jobs:
   france:
     needs: prepare
     runs-on: ubuntu-latest
-    container:
-      image: debian
     strategy:
       matrix:
         subregion: ["alsace","aquitaine","auvergne","basse-normandie","bourgogne","bretagne","centre","champagne-ardenne","corse","franche-comte","guadeloupe","guyane","haute-normandie","ile-de-france","languedoc-roussillon","limousin","lorraine","martinique","mayotte","midi-pyrenees","nord-pas-de-calais","pays-de-la-loire","picardie","poitou-charentes","provence-alpes-cote-d-azur","reunion","rhone-alpes"]
@@ -270,7 +250,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Setup maptool
         run: |
-          apt update && apt install -y wget maptool
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
@@ -279,7 +258,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget --verbose --tries=10 https://download.geofabrik.de/europe/france/${{ matrix.subregion }}-latest.osm.pbf
+          for i in {1..10}; do wget https://download.geofabrik.de/europe/france/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -301,8 +280,6 @@ jobs:
   germany:
     needs: prepare
     runs-on: ubuntu-latest
-    container:
-      image: debian
     strategy:
       matrix:
         subregion: ["baden-wuerttemberg","bayern","berlin","brandenburg","bremen","hamburg","hessen","mecklenburg-vorpommern","niedersachsen","nordrhein-westfalen","rheinland-pfalz","saarland","sachsen-anhalt","sachsen","schleswig-holstein","thueringen"]
@@ -311,7 +288,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Setup maptool
         run: |
-          apt update && apt install -y wget maptool
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
@@ -320,7 +296,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget --verbose --tries=10 https://download.geofabrik.de/europe/germany/${{ matrix.subregion }}-latest.osm.pbf
+          for i in {1..10}; do wget https://download.geofabrik.de/europe/germany/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -342,8 +318,6 @@ jobs:
   great-britain:
     needs: prepare
     runs-on: ubuntu-latest
-    container:
-      image: debian
     strategy:
       matrix:
         subregion: ["england","scotland","wales"]
@@ -352,7 +326,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Setup maptool
         run: |
-          apt update && apt install -y wget maptool
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
@@ -361,7 +334,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget --verbose --tries=10 https://download.geofabrik.de/europe/great-britain/${{ matrix.subregion }}-latest.osm.pbf
+          for i in {1..10}; do wget https://download.geofabrik.de/europe/great-britain/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -385,8 +358,6 @@ jobs:
   italy:
     needs: prepare
     runs-on: ubuntu-latest
-    container:
-      image: debian
     strategy:
       matrix:
         subregion: ["centro","isole","nord-est","nord-ovest","sud"]
@@ -395,7 +366,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Setup maptool
         run: |
-          apt update && apt install -y wget maptool
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
@@ -404,7 +374,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget --verbose --tries=10 https://download.geofabrik.de/europe/italy/${{ matrix.subregion }}-latest.osm.pbf
+          for i in {1..10}; do wget https://download.geofabrik.de/europe/italy/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -427,8 +397,6 @@ jobs:
   netherlands:
     needs: prepare
     runs-on: ubuntu-latest
-    container:
-      image: debian
     strategy:
       matrix:
         subregion: ["drenthe","flevoland","friesland","gelderland","groningen","limburg","noord-brabant","noord-holland","overijssel","utrecht","zeeland","zuid-holland"]
@@ -437,7 +405,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Setup maptool
         run: |
-          apt update && apt install -y wget maptool
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
@@ -446,7 +413,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget --verbose --tries=10 https://download.geofabrik.de/europe/netherlands/${{ matrix.subregion }}-latest.osm.pbf
+          for i in {1..10}; do wget https://download.geofabrik.de/europe/netherlands/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -468,8 +435,6 @@ jobs:
   poland:
     needs: prepare
     runs-on: ubuntu-latest
-    container:
-      image: debian
     strategy:
       matrix:
         subregion: ["dolnoslaskie","kujawsko-pomorskie","lodzkie","lubelskie","lubuskie","malopolskie","mazowieckie","opolskie","podkarpackie","podlaskie","pomorskie","slaskie","swietokrzyskie","warminsko-mazurskie","wielkopolskie","zachodniopomorskie"]
@@ -478,7 +443,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Setup maptool
         run: |
-          apt update && apt install -y wget maptool
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
@@ -487,7 +451,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget --verbose --tries=10 https://download.geofabrik.de/europe/poland/${{ matrix.subregion }}-latest.osm.pbf
+          for i in {1..10}; do wget https://download.geofabrik.de/europe/poland/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -509,8 +473,6 @@ jobs:
   europe_other:
     needs: prepare
     runs-on: ubuntu-latest
-    container:
-      image: debian
     strategy:
       matrix:
         subregion: ['albania', 'andorra', 'austria', 'azores', 'belarus', 'belgium', 'bosnia-herzegovina', 'bulgaria', 'croatia', 'cyprus', 'czech-republic', 'denmark', 'estonia', 'faroe-islands', 'finland', 'georgia', 'greece', 'guernsey-jersey', 'hungary', 'iceland', 'ireland-and-northern-ireland', 'isle-of-man', 'kosovo', 'latvia', 'liechtenstein', 'lithuania', 'luxembourg', 'macedonia', 'malta', 'moldova', 'monaco', 'montenegro', 'norway', 'portugal', 'romania', 'serbia', 'slovakia', 'slovenia', 'spain', 'sweden', 'switzerland', 'turkey', 'ukraine']
@@ -519,7 +481,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Setup maptool
         run: |
-          apt update && apt install -y wget maptool
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
@@ -528,7 +489,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget --verbose --tries=10 https://download.geofabrik.de/europe/${{ matrix.subregion }}-latest.osm.pbf
+          for i in {1..10}; do wget https://download.geofabrik.de/europe/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -550,8 +511,6 @@ jobs:
   canada:
     needs: prepare
     runs-on: ubuntu-latest
-    container:
-      image: debian
     strategy:
       matrix:
         subregion: ["alberta","british-columbia","manitoba","new-brunswick","newfoundland-and-labrador","northwest-territories","nova-scotia","nunavut","ontario","prince-edward-island","quebec","saskatchewan","yukon"]
@@ -560,7 +519,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Setup maptool
         run: |
-          apt update && apt install -y wget maptool
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
@@ -569,7 +527,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget --verbose --tries=10 https://download.geofabrik.de/north-america/canada/${{ matrix.subregion }}-latest.osm.pbf
+          for i in {1..10}; do wget https://download.geofabrik.de/north-america/canada/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -591,8 +549,6 @@ jobs:
   us:
     needs: prepare
     runs-on: ubuntu-latest
-    container:
-      image: debian
     strategy:
       matrix:
         subregion: ["alabama","alaska","arizona","arkansas","california","colorado","connecticut","delaware","district-of-columbia","florida","georgia","hawaii","idaho","illinois","indiana","iowa","kansas","kentucky","louisiana","maine","maryland","massachusetts","michigan","minnesota","mississippi","missouri","montana","nebraska","nevada","new-hampshire","new-jersey","new-mexico","new-york","north-carolina","north-dakota","ohio","oklahoma","oregon","pennsylvania","puerto-rico","rhode-island","south-carolina","south-dakota","tennessee","texas","utah","vermont","virginia","washington","west-virginia","wisconsin","wyoming"]
@@ -601,7 +557,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Setup maptool
         run: |
-          apt update && apt install -y wget maptool
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
@@ -610,7 +565,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget --verbose --tries=10 https://download.geofabrik.de/north-america/us/${{ matrix.subregion }}-latest.osm.pbf
+          for i in {1..10}; do wget https://download.geofabrik.de/north-america/us/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -632,8 +587,6 @@ jobs:
   north-america_other:
     needs: prepare
     runs-on: ubuntu-latest
-    container:
-      image: debian
     strategy:
       matrix:
         subregion: ["greenland","mexico"]
@@ -642,7 +595,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Setup maptool
         run: |
-          apt update && apt install -y wget maptool
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
@@ -651,7 +603,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget --verbose --tries=10 https://download.geofabrik.de/north-america/${{ matrix.subregion }}-latest.osm.pbf
+          for i in {1..10}; do wget https://download.geofabrik.de/north-america/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -673,8 +625,6 @@ jobs:
   brazil:
     needs: prepare
     runs-on: ubuntu-latest
-    container:
-      image: debian
     strategy:
       matrix:
         subregion: ["centro-oeste","nordeste","norte","sudeste","sul"]
@@ -683,7 +633,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Setup maptool
         run: |
-          apt update && apt install -y wget maptool
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
@@ -692,7 +641,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget --verbose --tries=10 https://download.geofabrik.de/south-america/brazil/${{ matrix.subregion }}-latest.osm.pbf
+          for i in {1..10}; do wget https://download.geofabrik.de/south-america/brazil/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -714,8 +663,6 @@ jobs:
   south-america_other:
     needs: prepare
     runs-on: ubuntu-latest
-    container:
-      image: debian
     strategy:
       matrix:
         subregion: ["argentina","bolivia","chile","colombia","ecuador","paraguay","peru","suriname","uruguay","venezuela"]
@@ -724,7 +671,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Setup maptool
         run: |
-          apt update && apt install -y wget maptool
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://23673-30791823-gh.circle-artifacts.com/0/linux/_CPack_Packages/Linux/STGZ/navit.sh"
           chmod +x navit.sh
@@ -733,7 +679,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          wget --verbose --tries=10 https://download.geofabrik.de/south-america/${{ matrix.subregion }}-latest.osm.pbf
+          for i in {1..10}; do wget https://download.geofabrik.de/south-america/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -762,8 +708,6 @@ jobs:
       - poland
       - europe_other
     runs-on: ubuntu-latest
-    container:
-      image: debian
     steps:
       - name: Done :-)
         run: "true"
@@ -774,8 +718,6 @@ jobs:
       - us
       - north-america_other
     runs-on: ubuntu-latest
-    container:
-      image: debian
     steps:
       - name: Done :-)
         run: "true"
@@ -785,8 +727,6 @@ jobs:
       - brazil
       - south-america_other
     runs-on: ubuntu-latest
-    container:
-      image: debian
     steps:
       - name: Done :-)
         run: "true"
