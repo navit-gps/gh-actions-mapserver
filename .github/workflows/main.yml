@@ -65,9 +65,9 @@ jobs:
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit.sh
+          chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
-          ./navit.sh --skip-license --prefix=navit
+          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -100,9 +100,9 @@ jobs:
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit.sh
+          chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
-          ./navit.sh --skip-license --prefix=navit
+          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -138,9 +138,9 @@ jobs:
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit.sh
+          chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
-          ./navit.sh --skip-license --prefix=navit
+          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -176,9 +176,9 @@ jobs:
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit.sh
+          chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
-          ./navit.sh --skip-license --prefix=navit
+          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -214,9 +214,9 @@ jobs:
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit.sh
+          chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
-          ./navit.sh --skip-license --prefix=navit
+          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -252,9 +252,9 @@ jobs:
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit.sh
+          chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
-          ./navit.sh --skip-license --prefix=navit
+          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -290,9 +290,9 @@ jobs:
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit.sh
+          chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
-          ./navit.sh --skip-license --prefix=navit
+          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -328,9 +328,9 @@ jobs:
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit.sh
+          chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
-          ./navit.sh --skip-license --prefix=navit
+          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -368,9 +368,9 @@ jobs:
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit.sh
+          chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
-          ./navit.sh --skip-license --prefix=navit
+          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -407,9 +407,9 @@ jobs:
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit.sh
+          chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
-          ./navit.sh --skip-license --prefix=navit
+          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -445,9 +445,9 @@ jobs:
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit.sh
+          chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
-          ./navit.sh --skip-license --prefix=navit
+          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -483,9 +483,9 @@ jobs:
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit.sh
+          chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
-          ./navit.sh --skip-license --prefix=navit
+          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -521,9 +521,9 @@ jobs:
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit.sh
+          chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
-          ./navit.sh --skip-license --prefix=navit
+          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -559,9 +559,9 @@ jobs:
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit.sh
+          chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
-          ./navit.sh --skip-license --prefix=navit
+          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -597,9 +597,9 @@ jobs:
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit.sh
+          chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
-          ./navit.sh --skip-license --prefix=navit
+          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -635,9 +635,9 @@ jobs:
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit.sh
+          chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
-          ./navit.sh --skip-license --prefix=navit
+          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -673,9 +673,9 @@ jobs:
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit.sh
+          chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
-          ./navit.sh --skip-license --prefix=navit
+          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
