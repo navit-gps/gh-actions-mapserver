@@ -50,6 +50,7 @@ jobs:
   planet:
     needs: prepare
     runs-on: self-hosted
+    timeout-minutes: 4320
     
     steps:
       - uses: actions/checkout@v2
@@ -66,6 +67,7 @@ jobs:
           for i in {1..10}; do wget --progress=bar:force:noscroll https://planet.osm.org/pbf/planet-latest.osm.pbf && break; done
 
       - name: Build map for ${{ matrix.subregion }}
+        timeout-minutes: 4320
         run: |
           ./navit/bin/maptool --64bit --protobuf --slice-size 4294967296 --ignore-unknown -i planet-latest.osm.pbf planet-${{needs.prepare.outputs.tag_name}}.bin
           
