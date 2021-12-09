@@ -66,7 +66,6 @@ jobs:
         run: |
           rm -f planet-latest.osm.pbf.md5 || true
           wget --output-document=planet-latest.osm.pbf.md5 https://planet.osm.org/pbf/planet-latest.osm.pbf.md5
-          md5sum -c planet-latest.osm.pbf.md5
           if md5sum -c planet-latest.osm.pbf.md5; then
             echo "Skipped downloading/update as file is up to date"
           else
