@@ -36,9 +36,9 @@ jobs:
             release = await github.repos.createRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              tag_name: 'Planet '+tag,
+              tag_name: tag,
               draft: true,
-              name: tag,
+              name: 'Planet '+tag,
               body: "Automatically converted Maps thanks FOsshost for the support",
             });
             const { id, html_url, upload_url } = release.data;
