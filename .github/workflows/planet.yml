@@ -67,7 +67,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i planet-latest.osm.pbf planet-${{needs.prepare.outputs.tag_name}}.bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 4294967296 --ignore-unknown -i planet-latest.osm.pbf planet-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v4
