@@ -1,0 +1,96 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Process Maps
+
+env:
+  GIT_EDITOR: true
+
+
+# Controls when the workflow will run
+on:
+  #schedule:
+  #  # * is a special character in YAML so you have to quote this string
+  #  - cron:  '30 15 * * 1'
+
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+
+jobs:
+  # This workflow contains a single job called "build"
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      id: ${{ steps.vars.outputs.id }}
+      html_url: ${{ steps.vars.outputs.html_url }}
+      upload_url: ${{ steps.vars.outputs.upload_url }}
+      tag_name: ${{ steps.vars.outputs.tag_name }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/github-script@v4
+        id: vars
+        with:
+          script: |
+            tag = new Date().toISOString().slice(0, 10)
+            release = await github.repos.createRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag_name: 'Planet '+tag,
+              draft: true,
+              name: tag,
+              body: "Automatically converted Maps thanks FOsshost for the support",
+            });
+            const { id, html_url, upload_url } = release.data;
+            core.setOutput('id', id);
+            core.setOutput('html_url', html_url);
+            core.setOutput('upload_url', upload_url);
+            core.setOutput('tag_name', tag);
+
+  planet:
+    needs: prepare
+    runs-on: self-hosted
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup maptool
+        run: |
+          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
+          chmod +x navit_trunk_1ed7f1b.sh
+          mkdir navit
+          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
+          
+      - name: Download Planet from OSM
+        run: |
+          for i in {1..10}; do wget https://planet.osm.org/pbf/planet-latest.osm.pbf && break; done
+
+      - name: Build map for ${{ matrix.subregion }}
+        run: |
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i planet-latest.osm.pbf planet-${{needs.prepare.outputs.tag_name}}.bin
+          
+      - name: Upload Artifact
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const fs = require('fs');
+            await github.repos.uploadReleaseAsset({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: ${{needs.prepare.outputs.id}},
+              name: 'planet-${{needs.prepare.outputs.tag_name}}.bin',
+              data: await fs.readFileSync(`planet-${{needs.prepare.outputs.tag_name}}.bin`) # Will probably fill all the RAM
+            });
+  
+  post:
+    runs-on: ubuntu-latest
+    needs:
+    - planet
+    steps:
+      - uses: actions/checkout@v2
+      - name: Publish Release
+        run: |
+          # Replace with gh command when they have a corresponding edit command
+          hub release edit --draft=false -m "" ${{needs.prepare.outputs.tag_name}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
