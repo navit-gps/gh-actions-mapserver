@@ -63,7 +63,7 @@ jobs:
           
       - name: Download Planet from OSM
         run: |
-          for i in {1..10}; do wget https://planet.osm.org/pbf/planet-latest.osm.pbf && break; done
+          for i in {1..10}; do wget --progress=bar:force:noscroll https://planet.osm.org/pbf/planet-latest.osm.pbf && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
