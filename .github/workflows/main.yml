@@ -745,9 +745,13 @@ jobs:
     - south-america
     steps:
       - uses: actions/checkout@v2
-      - name: Publish Release
-        run: |
-          # Replace with gh command when they have a corresponding edit command
-          hub release edit --draft=false -m "" ${{needs.prepare.outputs.tag_name}}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/github-script@v4
+        id: vars
+        with:
+          script: |
+            github.repos.updateRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: ${{needs.prepare.outputs.id}},
+              draft: false,
+            });
