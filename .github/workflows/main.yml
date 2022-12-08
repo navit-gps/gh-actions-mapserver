@@ -65,7 +65,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          apt update && apt install libprotobuf-c1
+          sudo apt update && sudo apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -102,7 +102,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          apt update && apt install libprotobuf-c1
+          sudo apt update && sudo apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -142,7 +142,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          apt update && apt install libprotobuf-c1
+          sudo apt update && sudo apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -182,7 +182,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          apt update && apt install libprotobuf-c1
+          sudo apt update && sudo apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -222,7 +222,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          apt update && apt install libprotobuf-c1
+          sudo apt update && sudo apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -262,7 +262,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          apt update && apt install libprotobuf-c1
+          sudo apt update && sudo apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -302,7 +302,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          apt update && apt install libprotobuf-c1
+          sudo apt update && sudo apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -342,7 +342,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          apt update && apt install libprotobuf-c1
+          sudo apt update && sudo apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -384,7 +384,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          apt update && apt install libprotobuf-c1
+          sudo apt update && sudo apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -425,7 +425,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          apt update && apt install libprotobuf-c1
+          sudo apt update && sudo apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -465,7 +465,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          apt update && apt install libprotobuf-c1
+          sudo apt update && sudo apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -505,7 +505,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          apt update && apt install libprotobuf-c1
+          sudo apt update && sudo apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -545,7 +545,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          apt update && apt install libprotobuf-c1
+          sudo apt update && sudo apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -585,7 +585,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          apt update && apt install libprotobuf-c1
+          sudo apt update && sudo apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -625,7 +625,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          apt update && apt install libprotobuf-c1
+          sudo apt update && sudo apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -665,7 +665,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          apt update && apt install libprotobuf-c1
+          sudo apt update && sudo apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -705,7 +705,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          apt update && apt install libprotobuf-c1
+          sudo apt update && sudo apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
