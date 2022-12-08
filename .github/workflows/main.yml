@@ -29,6 +29,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/github-script@v4
+        if: ${{ !env.ACT }}
         id: vars
         with:
           script: |
@@ -64,6 +65,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          apt update && apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -79,6 +81,7 @@ jobs:
           
       - name: Upload Artifact
         uses: actions/github-script@v4
+        if: ${{ !env.ACT }}
         with:
           script: |
             const fs = require('fs');
@@ -99,6 +102,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          apt update && apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -114,6 +118,7 @@ jobs:
           
       - name: Upload Artifact
         uses: actions/github-script@v4
+        if: ${{ !env.ACT }}
         with:
           script: |
             const fs = require('fs');
@@ -137,6 +142,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          apt update && apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -152,6 +158,7 @@ jobs:
           
       - name: Upload Artifact
         uses: actions/github-script@v4
+        if: ${{ !env.ACT }}
         with:
           script: |
             const fs = require('fs');
@@ -175,6 +182,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          apt update && apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -190,6 +198,7 @@ jobs:
           
       - name: Upload Artifact
         uses: actions/github-script@v4
+        if: ${{ !env.ACT }}
         with:
           script: |
             const fs = require('fs');
@@ -213,6 +222,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          apt update && apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -228,6 +238,7 @@ jobs:
           
       - name: Upload Artifact
         uses: actions/github-script@v4
+        if: ${{ !env.ACT }}
         with:
           script: |
             const fs = require('fs');
@@ -251,6 +262,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          apt update && apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -266,6 +278,7 @@ jobs:
           
       - name: Upload Artifact
         uses: actions/github-script@v4
+        if: ${{ !env.ACT }}
         with:
           script: |
             const fs = require('fs');
@@ -289,6 +302,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          apt update && apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -304,6 +318,7 @@ jobs:
           
       - name: Upload Artifact
         uses: actions/github-script@v4
+        if: ${{ !env.ACT }}
         with:
           script: |
             const fs = require('fs');
@@ -327,6 +342,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          apt update && apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -343,6 +359,7 @@ jobs:
       
       - name: Upload Artifact
         uses: actions/github-script@v4
+        if: ${{ !env.ACT }}
         with:
           script: |
             const fs = require('fs');
@@ -367,6 +384,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          apt update && apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -382,6 +400,7 @@ jobs:
           
       - name: Upload Artifact
         uses: actions/github-script@v4
+        if: ${{ !env.ACT }}
         with:
           script: |
             const fs = require('fs');
@@ -406,6 +425,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          apt update && apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -421,6 +441,7 @@ jobs:
           
       - name: Upload Artifact
         uses: actions/github-script@v4
+        if: ${{ !env.ACT }}
         with:
           script: |
             const fs = require('fs');
@@ -444,6 +465,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          apt update && apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -459,6 +481,7 @@ jobs:
           
       - name: Upload Artifact
         uses: actions/github-script@v4
+        if: ${{ !env.ACT }}
         with:
           script: |
             const fs = require('fs');
@@ -482,6 +505,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          apt update && apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -497,6 +521,7 @@ jobs:
           
       - name: Upload Artifact
         uses: actions/github-script@v4
+        if: ${{ !env.ACT }}
         with:
           script: |
             const fs = require('fs');
@@ -520,6 +545,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          apt update && apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -535,6 +561,7 @@ jobs:
           
       - name: Upload Artifact
         uses: actions/github-script@v4
+        if: ${{ !env.ACT }}
         with:
           script: |
             const fs = require('fs');
@@ -558,6 +585,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          apt update && apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -573,6 +601,7 @@ jobs:
           
       - name: Upload Artifact
         uses: actions/github-script@v4
+        if: ${{ !env.ACT }}
         with:
           script: |
             const fs = require('fs');
@@ -596,6 +625,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          apt update && apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -611,6 +641,7 @@ jobs:
           
       - name: Upload Artifact
         uses: actions/github-script@v4
+        if: ${{ !env.ACT }}
         with:
           script: |
             const fs = require('fs');
@@ -634,6 +665,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          apt update && apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -649,6 +681,7 @@ jobs:
           
       - name: Upload Artifact
         uses: actions/github-script@v4
+        if: ${{ !env.ACT }}
         with:
           script: |
             const fs = require('fs');
@@ -672,6 +705,7 @@ jobs:
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
+          apt update && apt install libprotobuf-c1
           wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
           chmod +x navit_trunk_1ed7f1b.sh
           mkdir navit
@@ -687,6 +721,7 @@ jobs:
           
       - name: Upload Artifact
         uses: actions/github-script@v4
+        if: ${{ !env.ACT }}
         with:
           script: |
             const fs = require('fs');
