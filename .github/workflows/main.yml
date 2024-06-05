@@ -83,6 +83,7 @@ jobs:
         uses: actions/github-script@v4
         if: ${{ !env.ACT }}
         with:
+          retries: 3
           script: |
             const fs = require('fs');
             await github.repos.uploadReleaseAsset({
@@ -120,6 +121,7 @@ jobs:
         uses: actions/github-script@v4
         if: ${{ !env.ACT }}
         with:
+          retries: 3
           script: |
             const fs = require('fs');
             await github.repos.uploadReleaseAsset({
@@ -160,6 +162,7 @@ jobs:
         uses: actions/github-script@v4
         if: ${{ !env.ACT }}
         with:
+          retries: 3
           script: |
             const fs = require('fs');
             await github.repos.uploadReleaseAsset({
@@ -200,6 +203,7 @@ jobs:
         uses: actions/github-script@v4
         if: ${{ !env.ACT }}
         with:
+          retries: 3
           script: |
             const fs = require('fs');
             await github.repos.uploadReleaseAsset({
@@ -240,6 +244,7 @@ jobs:
         uses: actions/github-script@v4
         if: ${{ !env.ACT }}
         with:
+          retries: 3
           script: |
             const fs = require('fs');
             await github.repos.uploadReleaseAsset({
@@ -280,6 +285,7 @@ jobs:
         uses: actions/github-script@v4
         if: ${{ !env.ACT }}
         with:
+          retries: 3
           script: |
             const fs = require('fs');
             await github.repos.uploadReleaseAsset({
@@ -320,6 +326,7 @@ jobs:
         uses: actions/github-script@v4
         if: ${{ !env.ACT }}
         with:
+          retries: 3
           script: |
             const fs = require('fs');
             await github.repos.uploadReleaseAsset({
@@ -361,6 +368,7 @@ jobs:
         uses: actions/github-script@v4
         if: ${{ !env.ACT }}
         with:
+          retries: 3
           script: |
             const fs = require('fs');
             await github.repos.uploadReleaseAsset({
@@ -402,6 +410,7 @@ jobs:
         uses: actions/github-script@v4
         if: ${{ !env.ACT }}
         with:
+          retries: 3
           script: |
             const fs = require('fs');
             await github.repos.uploadReleaseAsset({
@@ -443,6 +452,7 @@ jobs:
         uses: actions/github-script@v4
         if: ${{ !env.ACT }}
         with:
+          retries: 3
           script: |
             const fs = require('fs');
             await github.repos.uploadReleaseAsset({
@@ -483,6 +493,7 @@ jobs:
         uses: actions/github-script@v4
         if: ${{ !env.ACT }}
         with:
+          retries: 3
           script: |
             const fs = require('fs');
             await github.repos.uploadReleaseAsset({
@@ -523,6 +534,7 @@ jobs:
         uses: actions/github-script@v4
         if: ${{ !env.ACT }}
         with:
+          retries: 3
           script: |
             const fs = require('fs');
             await github.repos.uploadReleaseAsset({
@@ -563,6 +575,7 @@ jobs:
         uses: actions/github-script@v4
         if: ${{ !env.ACT }}
         with:
+          retries: 3
           script: |
             const fs = require('fs');
             await github.repos.uploadReleaseAsset({
@@ -603,6 +616,7 @@ jobs:
         uses: actions/github-script@v4
         if: ${{ !env.ACT }}
         with:
+          retries: 3
           script: |
             const fs = require('fs');
             await github.repos.uploadReleaseAsset({
@@ -643,6 +657,7 @@ jobs:
         uses: actions/github-script@v4
         if: ${{ !env.ACT }}
         with:
+          retries: 3
           script: |
             const fs = require('fs');
             await github.repos.uploadReleaseAsset({
@@ -683,6 +698,7 @@ jobs:
         uses: actions/github-script@v4
         if: ${{ !env.ACT }}
         with:
+          retries: 3
           script: |
             const fs = require('fs');
             await github.repos.uploadReleaseAsset({
@@ -723,6 +739,7 @@ jobs:
         uses: actions/github-script@v4
         if: ${{ !env.ACT }}
         with:
+          retries: 3
           script: |
             const fs = require('fs');
             await github.repos.uploadReleaseAsset({
