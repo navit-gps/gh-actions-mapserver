@@ -335,7 +335,7 @@ jobs:
               data: await fs.readFileSync(`europe-germany-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin`)
             });
   
-  great-britain:
+  united-kingdom:
     needs: prepare
     runs-on: ubuntu-latest
     strategy:
@@ -355,11 +355,11 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          for i in {1..10}; do wget https://download.geofabrik.de/europe/great-britain/${{ matrix.subregion }}-latest.osm.pbf && break; done
+          for i in {1..10}; do wget https://download.geofabrik.de/europe/united-kingdom/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf europe-great-britain-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf europe-united-kingdom-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       
       - name: Upload Artifact
@@ -373,8 +373,8 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               release_id: ${{needs.prepare.outputs.id}},
-              name: 'europe-great-britain-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin',
-              data: await fs.readFileSync(`europe-great-britain-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin`)
+              name: 'europe-united-kingdom-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin',
+              data: await fs.readFileSync(`europe-united-kingdom-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin`)
             });
   
   
@@ -752,7 +752,7 @@ jobs:
     needs: 
       - france
       - germany
-      - great-britain
+      - united-kingdom
       - italy
       - netherlands
       - poland
