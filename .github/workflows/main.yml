@@ -799,7 +799,7 @@ jobs:
         id: vars
         with:
           script: |
-            github.repos.updateRelease({
+            github.rest.repos.updateRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
               release_id: ${{needs.prepare.outputs.id}},
