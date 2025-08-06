@@ -26,7 +26,7 @@ jobs:
       tag_name: ${{ steps.vars.outputs.tag_name }}
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/github-script@v4
+      - uses: actions/github-script@v7
         if: ${{ !env.ACT }}
         id: vars
         with:
@@ -78,7 +78,7 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf africa-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
-        uses: actions/github-script@v4
+        uses: actions/github-script@v7
         if: ${{ !env.ACT }}
         with:
           retries: 3
@@ -116,7 +116,7 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i antarctica-latest.osm.pbf antarctica-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
-        uses: actions/github-script@v4
+        uses: actions/github-script@v7
         if: ${{ !env.ACT }}
         with:
           retries: 3
@@ -157,7 +157,7 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf asia-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
-        uses: actions/github-script@v4
+        uses: actions/github-script@v7
         if: ${{ !env.ACT }}
         with:
           retries: 3
@@ -198,7 +198,7 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf australia-oceania-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
-        uses: actions/github-script@v4
+        uses: actions/github-script@v7
         if: ${{ !env.ACT }}
         with:
           retries: 3
@@ -239,7 +239,7 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf central-america-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
-        uses: actions/github-script@v4
+        uses: actions/github-script@v7
         if: ${{ !env.ACT }}
         with:
           retries: 3
@@ -280,7 +280,7 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf europe-france-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
-        uses: actions/github-script@v4
+        uses: actions/github-script@v7
         if: ${{ !env.ACT }}
         with:
           retries: 3
@@ -321,7 +321,7 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf europe-germany-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
-        uses: actions/github-script@v4
+        uses: actions/github-script@v7
         if: ${{ !env.ACT }}
         with:
           retries: 3
@@ -363,7 +363,7 @@ jobs:
           
       
       - name: Upload Artifact
-        uses: actions/github-script@v4
+        uses: actions/github-script@v7
         if: ${{ !env.ACT }}
         with:
           retries: 3
@@ -405,7 +405,7 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf europe-italy-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
-        uses: actions/github-script@v4
+        uses: actions/github-script@v7
         if: ${{ !env.ACT }}
         with:
           retries: 3
@@ -447,7 +447,7 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf europe-netherlands-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
-        uses: actions/github-script@v4
+        uses: actions/github-script@v7
         if: ${{ !env.ACT }}
         with:
           retries: 3
@@ -488,7 +488,7 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf europe-poland-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
-        uses: actions/github-script@v4
+        uses: actions/github-script@v7
         if: ${{ !env.ACT }}
         with:
           retries: 3
@@ -529,7 +529,7 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf europe-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
-        uses: actions/github-script@v4
+        uses: actions/github-script@v7
         if: ${{ !env.ACT }}
         with:
           retries: 3
@@ -570,7 +570,7 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf north-america-canada-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
-        uses: actions/github-script@v4
+        uses: actions/github-script@v7
         if: ${{ !env.ACT }}
         with:
           retries: 3
@@ -611,7 +611,7 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf north-america-us-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
-        uses: actions/github-script@v4
+        uses: actions/github-script@v7
         if: ${{ !env.ACT }}
         with:
           retries: 3
@@ -652,7 +652,7 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf north-america-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
-        uses: actions/github-script@v4
+        uses: actions/github-script@v7
         if: ${{ !env.ACT }}
         with:
           retries: 3
@@ -693,7 +693,7 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf south-america-brazil-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
-        uses: actions/github-script@v4
+        uses: actions/github-script@v7
         if: ${{ !env.ACT }}
         with:
           retries: 3
@@ -734,7 +734,7 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 --ignore-unknown -i ${{ matrix.subregion }}-latest.osm.pbf south-america-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
-        uses: actions/github-script@v4
+        uses: actions/github-script@v7
         if: ${{ !env.ACT }}
         with:
           retries: 3
@@ -795,7 +795,7 @@ jobs:
     - south-america
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/github-script@v4
+      - uses: actions/github-script@v7
         id: vars
         with:
           script: |
