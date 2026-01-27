@@ -54,20 +54,14 @@ jobs:
   africa:
     needs: prepare
     runs-on: ubuntu-latest
+    container: 
+      image: ghcr.io/navit-gps/navit/maptool:trunk
     strategy:
       matrix:
         subregion: ["algeria", "angola", "benin", "botswana", "burkina-faso", "burundi", "cameroon", "canary-islands", "cape-verde", "central-african-republic", "chad", "comores", "congo-brazzaville", "congo-democratic-republic", "djibouti", "egypt", "equatorial-guinea", "eritrea", "ethiopia", "gabon", "ghana", "guinea", "guinea-bissau", "ivory-coast", "kenya", "lesotho", "liberia", "libya", "madagascar", "malawi", "mali", "mauritania", "mauritius", "morocco", "mozambique", "namibia", "niger", "nigeria", "rwanda", "saint-helena-ascension-and-tristan-da-cunha", "sao-tome-and-principe", "senegal-and-gambia", "seychelles", "sierra-leone", "somalia", "south-africa", "south-sudan", "sudan", "swaziland", "tanzania", "togo", "tunisia", "uganda", "zambia", "zimbabwe"]
     
     steps:
       - uses: actions/checkout@v2
-      - name: Setup maptool
-        run: |
-          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          sudo apt update && sudo apt install libprotobuf-c1
-          wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit_trunk_1ed7f1b.sh
-          mkdir navit
-          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -75,7 +69,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf africa-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf africa-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v7
@@ -95,17 +89,11 @@ jobs:
   antarctica:
     needs: prepare
     runs-on: ubuntu-latest
+    container: 
+      image: ghcr.io/navit-gps/navit/maptool:trunk
     
     steps:
       - uses: actions/checkout@v2
-      - name: Setup maptool
-        run: |
-          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          sudo apt update && sudo apt install libprotobuf-c1
-          wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit_trunk_1ed7f1b.sh
-          mkdir navit
-          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -113,7 +101,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i antarctica-latest.osm.pbf antarctica-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i antarctica-latest.osm.pbf antarctica-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v7
@@ -133,20 +121,14 @@ jobs:
   asia:
     needs: prepare
     runs-on: ubuntu-latest
+    container: 
+      image: ghcr.io/navit-gps/navit/maptool:trunk
     strategy:
       matrix:
         subregion: ["afghanistan", "armenia", "azerbaijan", "bangladesh", "bhutan", "cambodia", "china", "gcc-states", "india", "indonesia", "iran", "iraq", "israel-and-palestine", "japan", "jordan", "kazakhstan", "kyrgyzstan", "laos", "lebanon", "malaysia-singapore-brunei", "maldives", "mongolia", "myanmar", "nepal", "north-korea", "pakistan", "philippines", "south-korea", "sri-lanka", "syria", "taiwan", "tajikistan", "thailand", "turkmenistan", "uzbekistan", "vietnam", "yemen"]
     
     steps:
       - uses: actions/checkout@v2
-      - name: Setup maptool
-        run: |
-          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          sudo apt update && sudo apt install libprotobuf-c1
-          wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit_trunk_1ed7f1b.sh
-          mkdir navit
-          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -154,7 +136,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf asia-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf asia-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v7
@@ -174,20 +156,14 @@ jobs:
   australia-oceania:
     needs: prepare
     runs-on: ubuntu-latest
+    container: 
+      image: ghcr.io/navit-gps/navit/maptool:trunk
     strategy:
       matrix:
         subregion: ["american-oceania", "australia", "cook-islands", "fiji", "ile-de-clipperton", "kiribati", "marshall-islands", "micronesia", "nauru", "new-caledonia", "new-zealand", "niue", "palau", "papua-new-guinea", "pitcairn-islands", "polynesie-francaise", "samoa", "solomon-islands", "tokelau", "tonga", "tuvalu", "vanuatu", "wallis-et-futuna"]
     
     steps:
       - uses: actions/checkout@v2
-      - name: Setup maptool
-        run: |
-          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          sudo apt update && sudo apt install libprotobuf-c1
-          wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit_trunk_1ed7f1b.sh
-          mkdir navit
-          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -195,7 +171,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf australia-oceania-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf australia-oceania-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v7
@@ -215,20 +191,14 @@ jobs:
   central-america:
     needs: prepare
     runs-on: ubuntu-latest
+    container: 
+      image: ghcr.io/navit-gps/navit/maptool:trunk
     strategy:
       matrix:
         subregion: ["bahamas", "belize", "costa-rica", "cuba", "el-salvador", "guatemala", "haiti-and-domrep", "honduras", "jamaica", "nicaragua"]
     
     steps:
       - uses: actions/checkout@v2
-      - name: Setup maptool
-        run: |
-          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          sudo apt update && sudo apt install libprotobuf-c1
-          wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit_trunk_1ed7f1b.sh
-          mkdir navit
-          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -236,7 +206,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf central-america-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf central-america-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v7
@@ -256,20 +226,14 @@ jobs:
   france:
     needs: prepare
     runs-on: ubuntu-latest
+    container: 
+      image: ghcr.io/navit-gps/navit/maptool:trunk
     strategy:
       matrix:
         subregion: ["alsace","aquitaine","auvergne","basse-normandie","bourgogne","bretagne","centre","champagne-ardenne","corse","franche-comte","guadeloupe","guyane","haute-normandie","ile-de-france","languedoc-roussillon","limousin","lorraine","martinique","mayotte","midi-pyrenees","nord-pas-de-calais","pays-de-la-loire","picardie","poitou-charentes","provence-alpes-cote-d-azur","reunion","rhone-alpes"]
     
     steps:
       - uses: actions/checkout@v2
-      - name: Setup maptool
-        run: |
-          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          sudo apt update && sudo apt install libprotobuf-c1
-          wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit_trunk_1ed7f1b.sh
-          mkdir navit
-          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -277,7 +241,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-france-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-france-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v7
@@ -297,20 +261,14 @@ jobs:
   germany:
     needs: prepare
     runs-on: ubuntu-latest
+    container: 
+      image: ghcr.io/navit-gps/navit/maptool:trunk
     strategy:
       matrix:
         subregion: ["baden-wuerttemberg","bayern","berlin","brandenburg","bremen","hamburg","hessen","mecklenburg-vorpommern","niedersachsen","nordrhein-westfalen","rheinland-pfalz","saarland","sachsen-anhalt","sachsen","schleswig-holstein","thueringen"]
     
     steps:
       - uses: actions/checkout@v2
-      - name: Setup maptool
-        run: |
-          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          sudo apt update && sudo apt install libprotobuf-c1
-          wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit_trunk_1ed7f1b.sh
-          mkdir navit
-          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -318,7 +276,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-germany-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-germany-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v7
@@ -338,20 +296,14 @@ jobs:
   united-kingdom:
     needs: prepare
     runs-on: ubuntu-latest
+    container: 
+      image: ghcr.io/navit-gps/navit/maptool:trunk
     strategy:
       matrix:
         subregion: ["england","scotland","wales"]
     
     steps:
       - uses: actions/checkout@v2
-      - name: Setup maptool
-        run: |
-          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          sudo apt update && sudo apt install libprotobuf-c1
-          wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit_trunk_1ed7f1b.sh
-          mkdir navit
-          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -359,7 +311,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-united-kingdom-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-united-kingdom-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       
       - name: Upload Artifact
@@ -381,20 +333,14 @@ jobs:
   italy:
     needs: prepare
     runs-on: ubuntu-latest
+    container: 
+      image: ghcr.io/navit-gps/navit/maptool:trunk
     strategy:
       matrix:
         subregion: ["centro","isole","nord-est","nord-ovest","sud"]
     
     steps:
       - uses: actions/checkout@v2
-      - name: Setup maptool
-        run: |
-          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          sudo apt update && sudo apt install libprotobuf-c1
-          wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit_trunk_1ed7f1b.sh
-          mkdir navit
-          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -402,7 +348,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-italy-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-italy-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v7
@@ -423,20 +369,14 @@ jobs:
   netherlands:
     needs: prepare
     runs-on: ubuntu-latest
+    container: 
+      image: ghcr.io/navit-gps/navit/maptool:trunk
     strategy:
       matrix:
         subregion: ["drenthe","flevoland","friesland","gelderland","groningen","limburg","noord-brabant","noord-holland","overijssel","utrecht","zeeland","zuid-holland"]
     
     steps:
       - uses: actions/checkout@v2
-      - name: Setup maptool
-        run: |
-          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          sudo apt update && sudo apt install libprotobuf-c1
-          wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit_trunk_1ed7f1b.sh
-          mkdir navit
-          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -444,7 +384,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-netherlands-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-netherlands-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v7
@@ -464,20 +404,14 @@ jobs:
   poland:
     needs: prepare
     runs-on: ubuntu-latest
+    container: 
+      image: ghcr.io/navit-gps/navit/maptool:trunk
     strategy:
       matrix:
         subregion: ["dolnoslaskie","kujawsko-pomorskie","lodzkie","lubelskie","lubuskie","malopolskie","mazowieckie","opolskie","podkarpackie","podlaskie","pomorskie","slaskie","swietokrzyskie","warminsko-mazurskie","wielkopolskie","zachodniopomorskie"]
     
     steps:
       - uses: actions/checkout@v2
-      - name: Setup maptool
-        run: |
-          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          sudo apt update && sudo apt install libprotobuf-c1
-          wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit_trunk_1ed7f1b.sh
-          mkdir navit
-          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -485,7 +419,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-poland-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-poland-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v7
@@ -505,20 +439,14 @@ jobs:
   europe_other:
     needs: prepare
     runs-on: ubuntu-latest
+    container: 
+      image: ghcr.io/navit-gps/navit/maptool:trunk
     strategy:
       matrix:
         subregion: ['albania', 'andorra', 'austria', 'azores', 'belarus', 'belgium', 'bosnia-herzegovina', 'bulgaria', 'croatia', 'cyprus', 'czech-republic', 'denmark', 'estonia', 'faroe-islands', 'finland', 'georgia', 'greece', 'guernsey-jersey', 'hungary', 'iceland', 'ireland-and-northern-ireland', 'isle-of-man', 'kosovo', 'latvia', 'liechtenstein', 'lithuania', 'luxembourg', 'macedonia', 'malta', 'moldova', 'monaco', 'montenegro', 'norway', 'portugal', 'romania', 'serbia', 'slovakia', 'slovenia', 'spain', 'sweden', 'switzerland', 'turkey', 'ukraine']
     
     steps:
       - uses: actions/checkout@v2
-      - name: Setup maptool
-        run: |
-          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          sudo apt update && sudo apt install libprotobuf-c1
-          wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit_trunk_1ed7f1b.sh
-          mkdir navit
-          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -526,7 +454,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v7
@@ -546,20 +474,14 @@ jobs:
   canada:
     needs: prepare
     runs-on: ubuntu-latest
+    container: 
+      image: ghcr.io/navit-gps/navit/maptool:trunk
     strategy:
       matrix:
         subregion: ["alberta","british-columbia","manitoba","new-brunswick","newfoundland-and-labrador","northwest-territories","nova-scotia","nunavut","ontario","prince-edward-island","quebec","saskatchewan","yukon"]
     
     steps:
       - uses: actions/checkout@v2
-      - name: Setup maptool
-        run: |
-          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          sudo apt update && sudo apt install libprotobuf-c1
-          wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit_trunk_1ed7f1b.sh
-          mkdir navit
-          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -567,7 +489,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf north-america-canada-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf north-america-canada-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v7
@@ -587,20 +509,14 @@ jobs:
   us:
     needs: prepare
     runs-on: ubuntu-latest
+    container: 
+      image: ghcr.io/navit-gps/navit/maptool:trunk
     strategy:
       matrix:
         subregion: ["alabama","alaska","arizona","arkansas","california","colorado","connecticut","delaware","district-of-columbia","florida","georgia","hawaii","idaho","illinois","indiana","iowa","kansas","kentucky","louisiana","maine","maryland","massachusetts","michigan","minnesota","mississippi","missouri","montana","nebraska","nevada","new-hampshire","new-jersey","new-mexico","new-york","north-carolina","north-dakota","ohio","oklahoma","oregon","pennsylvania","puerto-rico","rhode-island","south-carolina","south-dakota","tennessee","texas","utah","vermont","virginia","washington","west-virginia","wisconsin","wyoming"]
     
     steps:
       - uses: actions/checkout@v2
-      - name: Setup maptool
-        run: |
-          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          sudo apt update && sudo apt install libprotobuf-c1
-          wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit_trunk_1ed7f1b.sh
-          mkdir navit
-          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -608,7 +524,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf north-america-us-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf north-america-us-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v7
@@ -628,20 +544,14 @@ jobs:
   north-america_other:
     needs: prepare
     runs-on: ubuntu-latest
+    container: 
+      image: ghcr.io/navit-gps/navit/maptool:trunk
     strategy:
       matrix:
         subregion: ["greenland","mexico"]
     
     steps:
       - uses: actions/checkout@v2
-      - name: Setup maptool
-        run: |
-          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          sudo apt update && sudo apt install libprotobuf-c1
-          wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit_trunk_1ed7f1b.sh
-          mkdir navit
-          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -649,7 +559,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf north-america-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf north-america-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v7
@@ -669,20 +579,14 @@ jobs:
   brazil:
     needs: prepare
     runs-on: ubuntu-latest
+    container: 
+      image: ghcr.io/navit-gps/navit/maptool:trunk
     strategy:
       matrix:
         subregion: ["centro-oeste","nordeste","norte","sudeste","sul"]
     
     steps:
       - uses: actions/checkout@v2
-      - name: Setup maptool
-        run: |
-          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          sudo apt update && sudo apt install libprotobuf-c1
-          wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit_trunk_1ed7f1b.sh
-          mkdir navit
-          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -690,7 +594,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf south-america-brazil-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf south-america-brazil-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v7
@@ -710,20 +614,14 @@ jobs:
   south-america_other:
     needs: prepare
     runs-on: ubuntu-latest
+    container: 
+      image: ghcr.io/navit-gps/navit/maptool:trunk
     strategy:
       matrix:
         subregion: ["argentina","bolivia","chile","colombia","ecuador","paraguay","peru","suriname","uruguay","venezuela"]
     
     steps:
       - uses: actions/checkout@v2
-      - name: Setup maptool
-        run: |
-          #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
-          sudo apt update && sudo apt install libprotobuf-c1
-          wget "https://github.com/navit-gps/dependencies/raw/master/gh-actions-mapserver/navit_trunk_1ed7f1b.sh"
-          chmod +x navit_trunk_1ed7f1b.sh
-          mkdir navit
-          ./navit_trunk_1ed7f1b.sh --skip-license --prefix=navit
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -731,7 +629,7 @@ jobs:
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          ./navit/bin/maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf south-america-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf south-america-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v7
