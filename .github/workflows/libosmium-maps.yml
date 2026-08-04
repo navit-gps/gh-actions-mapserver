@@ -20,6 +20,12 @@ env:
   MAPTOOL_OPTS: --64bit --slice-size 6442450944
 
 on:
+  # A manual start needs the workflow file on the default branch. This file is
+  # on a branch, so a push to that branch starts the pilot. Delete this trigger
+  # when the file reaches main.
+  push:
+    branches:
+      - libosmium-maps
   workflow_dispatch:
 
 jobs:
