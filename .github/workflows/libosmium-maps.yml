@@ -91,6 +91,76 @@ jobs:
           prefix: europe-france
           maptool-opts: ${{ env.MAPTOOL_OPTS }}
 
+  # France as one map instead of 27 subregions. This needs much more room than a
+  # subregion: about 5 GB for the extract, about 19 GB for the temporary files
+  # and about 3.5 GB for the result. A runner does not have that much free space
+  # at the start, so this job removes the large preinstalled toolchains first.
+  france-full:
+    needs: maptool
+    runs-on: ubuntu-latest
+    timeout-minutes: 350   # the limit of a job is 6 h
+    steps:
+      - name: Report and increase the free space
+        run: |
+          echo "before:"; df -h / /mnt 2>/dev/null || df -h
+          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/lib/android \
+                      /opt/hostedtoolcache/CodeQL /usr/local/share/boost || true
+          echo "after:"; df -h / /mnt 2>/dev/null || df -h
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: maptool
+
+      - name: Unpack maptool
+        run: |
+          mkdir -p "$RUNNER_TEMP/maptool"
+          tar xzf maptool.tar.gz -C "$RUNNER_TEMP/maptool"
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libglib2.0-0 zlib1g libexpat1 libbz2-1.0 libpng16-16 aria2
+          echo "LD_LIBRARY_PATH=$RUNNER_TEMP/maptool" >> "$GITHUB_ENV"
+          echo "MAPTOOL=$RUNNER_TEMP/maptool/maptool" >> "$GITHUB_ENV"
+
+      - name: Download the extract of France
+        run: |
+          # Geofabrik limits one connection, so use several.
+          aria2c -x8 -s8 --file-allocation=none --console-log-level=warn \
+            -o france-latest.osm.pbf \
+            https://download.geofabrik.de/europe/france-latest.osm.pbf
+          ls -la france-latest.osm.pbf
+
+      - name: Build the map of France
+        run: |
+          out="europe-france-$(date -I).bin"
+          echo "MAP=$out" >> "$GITHUB_ENV"
+          start=$(date +%s)
+          "$MAPTOOL" $MAPTOOL_OPTS -i france-latest.osm.pbf "$out"
+          echo "maptool needed $(( $(date +%s) - start )) s for France"
+          df -h . | tail -1
+
+      - name: Check the map
+        run: |
+          ls -la "$MAP"
+          python3 - "$MAP" <<'EOF'
+          import sys, zipfile
+          with zipfile.ZipFile(sys.argv[1]) as z:
+              names = z.namelist()
+          if 'index' not in names:
+              sys.exit('no index member')
+          # A country map of France has about 115000 members. A much smaller
+          # number means that a phase gave up quietly.
+          if len(names) < 50000:
+              sys.exit(f'only {len(names)} members, expected about 115000')
+          print(f'{sys.argv[1]}: {len(names)} members, index present')
+          EOF
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: europe-france-full
+          path: ${{ env.MAP }}
+          retention-days: 5
+          compression-level: 0
+
   germany:
     needs: maptool
     runs-on: ubuntu-latest
