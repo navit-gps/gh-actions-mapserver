@@ -1,0 +1,102 @@
+# Map generation with the libosmium based maptool.
+#
+# Pilot for navit-gps/navit PR 1604, which replaces the four hand-written OSM
+# parsers of maptool with one libosmium handler. It covers France and Germany
+# only. Other regions stay on main.yml until this pilot is complete.
+#
+# main.yml uses the prebuilt image ghcr.io/navit-gps/navit/maptool:trunk. No
+# such image exists for the PR branch, because container.yml in navit builds
+# the image only for a push to trunk. This workflow therefore builds maptool
+# once and gives the binary to the map jobs as an artifact.
+
+name: Process Maps (libosmium)
+
+env:
+  GIT_EDITOR: true
+  # Branch or tag of navit-gps/navit that provides the libosmium maptool.
+  NAVIT_REF: maptool-libosmium
+  # Same options that main.yml uses, without --protobuf. maptool now detects
+  # the format from the file name.
+  MAPTOOL_OPTS: --64bit --slice-size 6442450944
+
+on:
+  workflow_dispatch:
+
+jobs:
+  maptool:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out navit at ${{ env.NAVIT_REF }}
+        uses: actions/checkout@v4
+        with:
+          repository: navit-gps/navit
+          ref: ${{ env.NAVIT_REF }}
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            cmake build-essential gettext \
+            libglib2.0-dev zlib1g-dev libexpat1-dev libbz2-dev \
+            libpng-dev libosmium2-dev libprotozero-dev
+
+      - name: Build maptool
+        run: |
+          mkdir build && cd build
+          cmake -DBUILD_MAPTOOL=ON -DSAMPLE_MAP=OFF ..
+          cmake --build . --target maptool -j"$(nproc)"
+
+      - name: Check that maptool is the libosmium build
+          # A build without libosmium keeps the old usage text and reports
+          # BUILD_MAPTOOL as disabled. Stop here instead of in every map job.
+        run: |
+          cd build
+          ./navit/maptool/maptool --help > usage.txt 2>&1 || true
+          grep -q "detected from the file suffix" usage.txt
+          echo "maptool reports libosmium input support"
+
+      - name: Pack maptool
+        run: |
+          cd build
+          mkdir -p dist
+          cp navit/maptool/maptool dist/
+          cp navit/libnavit_core.so dist/
+          tar czf ../maptool.tar.gz -C dist .
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: maptool
+          path: maptool.tar.gz
+          retention-days: 5
+
+  france:
+    needs: maptool
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        subregion: ["alsace","aquitaine","auvergne","basse-normandie","bourgogne","bretagne","centre","champagne-ardenne","corse","franche-comte","guadeloupe","guyane","haute-normandie","ile-de-france","languedoc-roussillon","limousin","lorraine","martinique","mayotte","midi-pyrenees","nord-pas-de-calais","pays-de-la-loire","picardie","poitou-charentes","provence-alpes-cote-d-azur","reunion","rhone-alpes"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/build-map
+        with:
+          region-path: europe/france
+          subregion: ${{ matrix.subregion }}
+          prefix: europe-france
+          maptool-opts: ${{ env.MAPTOOL_OPTS }}
+
+  germany:
+    needs: maptool
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        subregion: ["baden-wuerttemberg","bayern","berlin","brandenburg","bremen","hamburg","hessen","mecklenburg-vorpommern","niedersachsen","nordrhein-westfalen","rheinland-pfalz","saarland","sachsen-anhalt","sachsen","schleswig-holstein","thueringen"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/build-map
+        with:
+          region-path: europe/germany
+          subregion: ${{ matrix.subregion }}
+          prefix: europe-germany
+          maptool-opts: ${{ env.MAPTOOL_OPTS }}

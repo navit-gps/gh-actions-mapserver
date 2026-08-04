@@ -1,0 +1,78 @@
+name: Build one map
+description: >
+  Downloads one Geofabrik extract, converts it with the libosmium maptool built
+  by the maptool job, checks the result and uploads it as an artifact.
+
+inputs:
+  region-path:
+    description: 'Path on download.geofabrik.de, for example europe/france'
+    required: true
+  subregion:
+    description: 'Name of the extract without the -latest.osm.pbf suffix'
+    required: true
+  prefix:
+    description: 'Prefix of the output file, for example europe-france'
+    required: true
+  maptool-opts:
+    description: 'Options for maptool'
+    required: false
+    default: '--64bit --slice-size 6442450944'
+
+runs:
+  using: composite
+  steps:
+    - name: Get maptool
+      uses: actions/download-artifact@v4
+      with:
+        name: maptool
+
+    - name: Unpack maptool
+      shell: bash
+      run: |
+        mkdir -p "$RUNNER_TEMP/maptool"
+        tar xzf maptool.tar.gz -C "$RUNNER_TEMP/maptool"
+        sudo apt-get update
+        sudo apt-get install -y --no-install-recommends \
+          libglib2.0-0 zlib1g libexpat1 libbz2-1.0 libpng16-16
+        echo "LD_LIBRARY_PATH=$RUNNER_TEMP/maptool" >> "$GITHUB_ENV"
+        echo "MAPTOOL=$RUNNER_TEMP/maptool/maptool" >> "$GITHUB_ENV"
+
+    - name: Download ${{ inputs.subregion }}
+      shell: bash
+      run: |
+        url="https://download.geofabrik.de/${{ inputs.region-path }}/${{ inputs.subregion }}-latest.osm.pbf"
+        for i in $(seq 1 10); do wget -q --show-progress "$url" && break; done
+        test -s "${{ inputs.subregion }}-latest.osm.pbf"
+
+    - name: Build map for ${{ inputs.subregion }}
+      shell: bash
+      run: |
+        out="${{ inputs.prefix }}-${{ inputs.subregion }}-$(date -I).bin"
+        echo "MAP=$out" >> "$GITHUB_ENV"
+        # No --protobuf: maptool detects the format from the .pbf suffix.
+        start=$(date +%s)
+        "$MAPTOOL" ${{ inputs.maptool-opts }} \
+          -i "${{ inputs.subregion }}-latest.osm.pbf" "$out"
+        echo "maptool needed $(( $(date +%s) - start )) s for ${{ inputs.subregion }}"
+
+    - name: Check the map
+      shell: bash
+      run: |
+        python3 - "$MAP" <<'EOF'
+        import sys, zipfile
+        path = sys.argv[1]
+        with zipfile.ZipFile(path) as z:
+            names = z.namelist()
+        if 'index' not in names:
+            sys.exit(f'{path} has no index member')
+        if len(names) < 2:
+            sys.exit(f'{path} has only {len(names)} members')
+        print(f'{path}: {len(names)} members, index present')
+        EOF
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.prefix }}-${{ inputs.subregion }}
+        path: ${{ env.MAP }}
+        retention-days: 5
+        compression-level: 0
