@@ -1,0 +1,282 @@
+# Compares the old maptool with the libosmium maptool on maps of whole countries.
+#
+# Structure:
+#   build     builds both versions from source with the same options
+#   convert   one job for each country and each version, all in parallel
+#   compare   compares the two maps of one country, reports the time of every phase
+#   summary   collects the reports of all countries into one table
+#
+# Each country gets two jobs on two fresh runners. Both start with an empty page
+# cache and read the same bytes. A single job would give the second conversion
+# the extract from memory, and that difference is large: a local pair of runs
+# reported phase 6 as 5.7 times faster for that reason alone.
+#
+# Each convert job downloads its own copy of the extract and records the MD5 sum.
+# The compare job stops if the two sums differ. Geofabrik replaces an extract
+# once a day, so two downloads in the same run give the same bytes. The check
+# makes that certain instead of assumed.
+#
+# The prebuilt image ghcr.io/navit-gps/navit/maptool:trunk is not used, because
+# it may carry other compiler options and would make the times hard to compare.
+#
+# These four countries are the countries that main.yml splits into subregions and
+# that stay below the 2 GiB limit of a GitHub release asset as one map:
+# netherlands 0.92, united-kingdom 1.53, poland 1.64 and italy 1.74 GiB. France,
+# Germany, Canada and the United States are above that limit as one map.
+
+name: Country A/B (old maptool against libosmium)
+
+env:
+  MAPTOOL_OPTS: --64bit --slice-size 6442450944
+
+on:
+  push:
+    branches:
+      - libosmium-ab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - name: trunk
+            ref: trunk
+            deps: libprotobuf-c-dev protobuf-c-compiler
+          - name: libosmium
+            ref: maptool-libosmium
+            deps: libosmium2-dev libprotozero-dev
+    steps:
+      - name: Check out navit at ${{ matrix.ref }}
+        uses: actions/checkout@v4
+        with:
+          repository: navit-gps/navit
+          ref: ${{ matrix.ref }}
+
+      - name: Install the build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            cmake build-essential gettext \
+            libglib2.0-dev zlib1g-dev libexpat1-dev libbz2-dev libpng-dev \
+            ${{ matrix.deps }}
+
+      - name: Build maptool
+        run: |
+          mkdir build && cd build
+          cmake -DBUILD_MAPTOOL=ON -DSAMPLE_MAP=OFF ..
+          cmake --build . --target maptool -j"$(nproc)"
+          # A missing dependency disables BUILD_MAPTOOL and leaves no binary.
+          test -x navit/maptool/maptool
+
+      - name: Pack maptool
+        run: |
+          cd build
+          mkdir -p dist
+          cp navit/maptool/maptool navit/libnavit_core.so dist/
+          tar czf ../maptool-${{ matrix.name }}.tar.gz -C dist .
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: maptool-${{ matrix.name }}
+          path: maptool-${{ matrix.name }}.tar.gz
+          retention-days: 5
+
+  convert:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      matrix:
+        country: [netherlands, united-kingdom, poland, italy]
+        version: [trunk, libosmium]
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: maptool-${{ matrix.version }}
+
+      - name: Prepare
+        run: |
+          mkdir -p "$RUNNER_TEMP/mt"
+          tar xzf maptool-${{ matrix.version }}.tar.gz -C "$RUNNER_TEMP/mt"
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libglib2.0-0 zlib1g libexpat1 libbz2-1.0 libpng16-16 aria2
+          df -h . | tail -1
+
+      - name: Download the extract of ${{ matrix.country }}
+        run: |
+          # Geofabrik limits one connection, so use several.
+          aria2c -x8 -s8 --file-allocation=none --console-log-level=warn \
+            -o country.osm.pbf \
+            https://download.geofabrik.de/europe/${{ matrix.country }}-latest.osm.pbf
+          ls -la country.osm.pbf
+          md5sum country.osm.pbf | awk '{print $1}' | tee pbf.md5
+
+      - name: Convert with the ${{ matrix.version }} maptool
+        env:
+          LD_LIBRARY_PATH: ${{ runner.temp }}/mt
+        run: |
+          # The old maptool needs the format on the command line. The libosmium
+          # maptool reads the format from the file name.
+          if [ "${{ matrix.version }}" = trunk ]; then fmt=--protobuf; else fmt=; fi
+          start=$(date +%s)
+          "$RUNNER_TEMP/mt/maptool" $MAPTOOL_OPTS $fmt \
+            -i country.osm.pbf map.bin > run.log 2>&1
+          echo "seconds=$(( $(date +%s) - start ))" | tee timing.txt
+          tail -2 run.log
+          df -h . | tail -1
+
+      - name: Check the map
+        run: |
+          ls -la map.bin
+          python3 - <<'EOF' | tee summary.txt
+          import zipfile
+          with zipfile.ZipFile('map.bin') as z:
+              info = z.infolist()
+          if not any(i.filename == 'index' for i in info):
+              raise SystemExit('map.bin has no index member')
+          # A country map has some thousand tiles. A much smaller number means
+          # that a phase gave up without an error.
+          if len(info) < 1000:
+              raise SystemExit(f'map.bin has only {len(info)} members')
+          print(f'members={len(info)}')
+          print(f'uncompressed={sum(i.file_size for i in info)}')
+          print('index=yes')
+          EOF
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: result-${{ matrix.country }}-${{ matrix.version }}
+          path: |
+            map.bin
+            run.log
+            timing.txt
+            summary.txt
+            pbf.md5
+          retention-days: 2
+          compression-level: 0
+
+  compare:
+    needs: convert
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        country: [netherlands, united-kingdom, poland, italy]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: result-${{ matrix.country }}-trunk
+          path: old
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: result-${{ matrix.country }}-libosmium
+          path: new
+
+      - name: Check that both jobs read the same extract
+        run: |
+          cat old/pbf.md5 new/pbf.md5
+          cmp old/pbf.md5 new/pbf.md5
+
+      - name: Report the time of every phase
+        run: |
+          python3 - ${{ matrix.country }} <<'EOF' | tee report.txt
+          import json, re, sys
+          country = sys.argv[1]
+          NAMES = {1:'read input',2:'resolve ways',3:'ways to pois',4:'split intersections',
+                   5:'coastlines',6:'towns to countries',7:'sort countries',8:'turn restrictions',
+                   9:'multipolygons',10:'assoc streets',11:'house numbers',12:'tiles',13:'assemble map'}
+          def phases(path):
+              t = open(path, errors='ignore').read()
+              d = {int(n): int(m)*60+int(s) for n, m, s in re.findall(r'Phase (\d+): [a-z ]+?(\d+):(\d\d)', t)}
+              keys = sorted(d)
+              return {n: d[keys[i+1]] - d[n] for i, n in enumerate(keys[:-1])}, max(d.values())
+          old, old_total = phases('old/run.log')
+          new, new_total = phases('new/run.log')
+          # Phase 13 uses the same code in both versions. Its ratio therefore
+          # shows how much the two runners differ, and it turns the other
+          # ratios into a value that does not depend on the runner.
+          base = (old.get(13, 0) / new[13]) if new.get(13) else 1.0
+          print(f'{country}: runner difference from phase 13: {base:.3f}\n')
+          print(f'{"phase":<24}{"old":>7}{"new":>7}{"ratio":>8}{"normalized":>12}')
+          for n in sorted(set(old) | set(new)):
+              o, w = old.get(n, 0), new.get(n, 0)
+              r = o / w if w else 0
+              print(f'{n:2d} {NAMES.get(n,"?"):<21}{o:>6}s{w:>6}s'
+                    f'{(f"{r:.2f}x" if w else "-"):>8}{(f"{r/base:.2f}x" if w and base else "-"):>12}')
+          print(f'{"TOTAL":<24}{old_total:>6}s{new_total:>6}s'
+                f'{old_total/new_total:>7.2f}x{old_total/new_total/base:>11.2f}x')
+          # The summary job reads this file and not the table above.
+          json.dump({'country': country, 'base': base, 'old': old, 'new': new,
+                     'old_total': old_total, 'new_total': new_total},
+                    open('report.json', 'w'))
+          EOF
+          echo; echo "old summary:"; cat old/summary.txt
+          echo; echo "new summary:"; cat new/summary.txt
+
+      - name: Compare the two maps
+        run: python3 scripts/cmp_itembin.py old/map.bin new/map.bin | tail -20
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ab-report-${{ matrix.country }}
+          path: |
+            report.txt
+            report.json
+            old/run.log
+            new/run.log
+            old/summary.txt
+            new/summary.txt
+          retention-days: 14
+
+  summary:
+    needs: compare
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: ab-report-*
+          path: reports
+
+      - name: Print one table for all countries
+        run: |
+          python3 - <<'EOF' | tee -a "$GITHUB_STEP_SUMMARY"
+          import glob, json
+          NAMES = {1:'read input',2:'resolve ways',3:'ways to pois',4:'split intersections',
+                   5:'coastlines',6:'towns to countries',7:'sort countries',8:'turn restrictions',
+                   9:'multipolygons',10:'assoc streets',11:'house numbers',12:'tiles',13:'assemble map'}
+          reports = [json.load(open(p)) for p in sorted(glob.glob('reports/*/report.json'))]
+          if not reports:
+              raise SystemExit('no report.json found, every compare job failed')
+          def cell(o, w, base=1.0):
+              return f'{o/w/base:.2f}x' if w else '-'
+          print('## Total time for each country\n')
+          print('| country | old | new | ratio | normalized |')
+          print('|---|---|---|---|---|')
+          for r in reports:
+              print(f'| {r["country"]} | {r["old_total"]}s | {r["new_total"]}s '
+                    f'| {cell(r["old_total"], r["new_total"])} '
+                    f'| {cell(r["old_total"], r["new_total"], r["base"])} |')
+          old_sum = sum(r['old_total'] for r in reports)
+          new_sum = sum(r['new_total'] for r in reports)
+          print(f'| **all four** | **{old_sum}s** | **{new_sum}s** '
+                f'| **{cell(old_sum, new_sum)}** | |')
+          print('\n## Time of each phase, all four countries together\n')
+          print('| phase | old | new | ratio | share of old |')
+          print('|---|---|---|---|---|')
+          for n in sorted(NAMES):
+              o = sum(r['old'].get(str(n), 0) for r in reports)
+              w = sum(r['new'].get(str(n), 0) for r in reports)
+              if not o and not w:
+                  continue
+              print(f'| {n} {NAMES[n]} | {o}s | {w}s | {cell(o, w)} | {100*o/old_sum:.1f}% |')
+          EOF
