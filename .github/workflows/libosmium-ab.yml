@@ -39,6 +39,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
+      # One failed build must not cancel the others. GitHub had an outage that
+      # cancelled two builds and with them 20 later jobs.
+      fail-fast: false
       matrix:
         include:
           - name: trunk
@@ -53,6 +56,11 @@ jobs:
           - name: parallel-zip
             ref: maptool-parallel-zip
             deps: libprotobuf-c-dev protobuf-c-compiler
+          # parallel-zip plus two more commits: the items of a tile get one
+          # fixed order, and libdeflate replaces zlib. Also from trunk.
+          - name: phase13-stack
+            ref: maptool-phase13-stack
+            deps: libprotobuf-c-dev protobuf-c-compiler libdeflate-dev
     steps:
       - name: Check out navit at ${{ matrix.ref }}
         uses: actions/checkout@v4
@@ -91,13 +99,16 @@ jobs:
 
   convert:
     needs: build
+    # Run also when one build fails. A conversion for a version without a
+    # binary fails alone at the download of its artifact.
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     timeout-minutes: 180
     strategy:
       fail-fast: false
       matrix:
         country: [netherlands, united-kingdom, poland, italy]
-        version: [trunk, libosmium, parallel-zip]
+        version: [trunk, libosmium, parallel-zip, phase13-stack]
     steps:
       - uses: actions/download-artifact@v4
         with:
@@ -109,7 +120,7 @@ jobs:
           tar xzf maptool-${{ matrix.version }}.tar.gz -C "$RUNNER_TEMP/mt"
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
-            libglib2.0-0 zlib1g libexpat1 libbz2-1.0 libpng16-16 aria2
+            libglib2.0-0 zlib1g libexpat1 libbz2-1.0 libpng16-16 aria2 libdeflate0
           df -h . | tail -1
 
       - name: Download the extract of ${{ matrix.country }}
@@ -182,13 +193,16 @@ jobs:
 
   compare:
     needs: convert
+    # Run also when one conversion fails. Without this, one failed conversion
+    # skipped every comparison, and the run gave no result at all.
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     timeout-minutes: 120
     strategy:
       fail-fast: false
       matrix:
         country: [netherlands, united-kingdom, poland, italy]
-        candidate: [libosmium, parallel-zip]
+        candidate: [libosmium, parallel-zip, phase13-stack]
     steps:
       - uses: actions/checkout@v4
 
@@ -226,8 +240,9 @@ jobs:
           # percent. To remove that difference, divide every ratio by the ratio
           # of a phase that the candidate does not change.
           # libosmium changes the parser, so phase 13 is the reference.
-          # parallel-zip changes phase 13, so phase 1 is the reference.
-          ref = 1 if candidate == 'parallel-zip' else 13
+          # parallel-zip and phase13-stack change phase 13, so phase 1 is the
+          # reference for them.
+          ref = 13 if candidate == 'libosmium' else 1
           base = (old.get(ref, 0) / new[ref]) if new.get(ref) else 1.0
           print(f'{country} / {candidate}: runner difference from phase {ref}: {base:.3f}\n')
           print(f'{"phase":<24}{"old":>7}{"new":>7}{"ratio":>8}{"normalized":>12}')
