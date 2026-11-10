@@ -24,41 +24,21 @@ jobs:
       html_url: ${{ steps.vars.outputs.html_url }}
       upload_url: ${{ steps.vars.outputs.upload_url }}
       tag_name: ${{ steps.vars.outputs.tag_name }}
-      land_cache_key: ${{ steps.land.outputs.key }}
-      land_sha256: ${{ steps.land-hash.outputs.sha256 }}
     steps:
-      - uses: actions/checkout@v7
-      - name: Select one land snapshot for the whole run
-        id: land
-        run: echo "key=osm-land-$(date -u +%F)" >> "$GITHUB_OUTPUT"
-      - uses: actions/cache@v4
-        id: land-cache
-        with:
-          path: .ocean-land
-          key: ${{ steps.land.outputs.key }}
-      - name: Download complete global land polygons
-        if: steps.land-cache.outputs.cache-hit != 'true'
-        run: |
-          wget --tries=3 -O land.zip https://osmdata.openstreetmap.de/download/land-polygons-split-3857.zip
-          unzip -q land.zip -d .ocean-land
-          rm land.zip
-      - name: Record the shared snapshot hash
-        id: land-hash
-        run: echo "sha256=$(sha256sum .ocean-land/land-polygons-split-3857/land_polygons.shp | cut -d' ' -f1)" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v2
       - uses: actions/github-script@v7
         if: ${{ !env.ACT }}
         id: vars
         with:
           script: |
             tag = new Date().toISOString().slice(0, 10)
-            if (context.eventName === "workflow_dispatch") tag += "-" + context.runId
             release = await github.rest.repos.createRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
               tag_name: tag,
               draft: true,
               name: tag,
-              body: "Automatically converted Maps. Global OSM land snapshot SHA-256: ${{ steps.land-hash.outputs.sha256 }}. Land data: https://osmdata.openstreetmap.de/ (OpenStreetMap contributors, ODbL).",
+              body: "Automatically converted Maps",
             });
             const { id, html_url, upload_url } = release.data;
             core.setOutput('id', id);
@@ -81,22 +61,15 @@ jobs:
         subregion: ["algeria", "angola", "benin", "botswana", "burkina-faso", "burundi", "cameroon", "canary-islands", "cape-verde", "central-african-republic", "chad", "comores", "congo-brazzaville", "congo-democratic-republic", "djibouti", "egypt", "equatorial-guinea", "eritrea", "ethiopia", "gabon", "ghana", "guinea", "guinea-bissau", "ivory-coast", "kenya", "lesotho", "liberia", "libya", "madagascar", "malawi", "mali", "mauritania", "mauritius", "morocco", "mozambique", "namibia", "niger", "nigeria", "rwanda", "saint-helena-ascension-and-tristan-da-cunha", "sao-tome-and-principe", "senegal-and-gambia", "seychelles", "sierra-leone", "somalia", "south-africa", "south-sudan", "sudan", "swaziland", "tanzania", "togo", "tunisia", "uganda", "zambia", "zimbabwe"]
     
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v2
           
       - name: Download ${{ matrix.subregion }}
         run: |
           for i in {1..10}; do wget https://download.geofabrik.de/africa/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
-      - name: Prepare ocean coverage
-        uses: ./.github/actions/ocean
-        with:
-          source: ${{ matrix.subregion }}-latest.osm.pbf
-          land-cache-key: ${{ needs.prepare.outputs.land_cache_key }}
-          land-sha256: ${{ needs.prepare.outputs.land_sha256 }}
-
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          maptool --ocean-polygons ocean.items --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf africa-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf africa-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v7
@@ -120,22 +93,15 @@ jobs:
       image: ghcr.io/navit-gps/navit/maptool:trunk
     
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v2
           
-      - name: Download Antarctica
+      - name: Download ${{ matrix.subregion }}
         run: |
           for i in {1..10}; do wget https://download.geofabrik.de/antarctica-latest.osm.pbf && break; done
 
-      - name: Prepare ocean coverage
-        uses: ./.github/actions/ocean
-        with:
-          source: antarctica-latest.osm.pbf
-          land-cache-key: ${{ needs.prepare.outputs.land_cache_key }}
-          land-sha256: ${{ needs.prepare.outputs.land_sha256 }}
-
-      - name: Build map for Antarctica
+      - name: Build map for ${{ matrix.subregion }}
         run: |
-          maptool --ocean-polygons ocean.items --64bit --protobuf --slice-size 6442450944 -i antarctica-latest.osm.pbf antarctica-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i antarctica-latest.osm.pbf antarctica-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v7
@@ -162,22 +128,15 @@ jobs:
         subregion: ["afghanistan", "armenia", "azerbaijan", "bangladesh", "bhutan", "cambodia", "china", "gcc-states", "india", "indonesia", "iran", "iraq", "israel-and-palestine", "japan", "jordan", "kazakhstan", "kyrgyzstan", "laos", "lebanon", "malaysia-singapore-brunei", "maldives", "mongolia", "myanmar", "nepal", "north-korea", "pakistan", "philippines", "south-korea", "sri-lanka", "syria", "taiwan", "tajikistan", "thailand", "turkmenistan", "uzbekistan", "vietnam", "yemen"]
     
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v2
           
       - name: Download ${{ matrix.subregion }}
         run: |
           for i in {1..10}; do wget https://download.geofabrik.de/asia/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
-      - name: Prepare ocean coverage
-        uses: ./.github/actions/ocean
-        with:
-          source: ${{ matrix.subregion }}-latest.osm.pbf
-          land-cache-key: ${{ needs.prepare.outputs.land_cache_key }}
-          land-sha256: ${{ needs.prepare.outputs.land_sha256 }}
-
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          maptool --ocean-polygons ocean.items --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf asia-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf asia-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v7
@@ -204,22 +163,15 @@ jobs:
         subregion: ["american-oceania", "australia", "cook-islands", "fiji", "ile-de-clipperton", "kiribati", "marshall-islands", "micronesia", "nauru", "new-caledonia", "new-zealand", "niue", "palau", "papua-new-guinea", "pitcairn-islands", "polynesie-francaise", "samoa", "solomon-islands", "tokelau", "tonga", "tuvalu", "vanuatu", "wallis-et-futuna"]
     
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v2
           
       - name: Download ${{ matrix.subregion }}
         run: |
           for i in {1..10}; do wget https://download.geofabrik.de/australia-oceania/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
-      - name: Prepare ocean coverage
-        uses: ./.github/actions/ocean
-        with:
-          source: ${{ matrix.subregion }}-latest.osm.pbf
-          land-cache-key: ${{ needs.prepare.outputs.land_cache_key }}
-          land-sha256: ${{ needs.prepare.outputs.land_sha256 }}
-
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          maptool --ocean-polygons ocean.items --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf australia-oceania-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf australia-oceania-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v7
@@ -246,22 +198,15 @@ jobs:
         subregion: ["bahamas", "belize", "costa-rica", "cuba", "el-salvador", "guatemala", "haiti-and-domrep", "honduras", "jamaica", "nicaragua"]
     
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v2
           
       - name: Download ${{ matrix.subregion }}
         run: |
           for i in {1..10}; do wget https://download.geofabrik.de/central-america/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
-      - name: Prepare ocean coverage
-        uses: ./.github/actions/ocean
-        with:
-          source: ${{ matrix.subregion }}-latest.osm.pbf
-          land-cache-key: ${{ needs.prepare.outputs.land_cache_key }}
-          land-sha256: ${{ needs.prepare.outputs.land_sha256 }}
-
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          maptool --ocean-polygons ocean.items --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf central-america-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf central-america-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v7
@@ -288,22 +233,15 @@ jobs:
         subregion: ["alsace","aquitaine","auvergne","basse-normandie","bourgogne","bretagne","centre","champagne-ardenne","corse","franche-comte","guadeloupe","guyane","haute-normandie","ile-de-france","languedoc-roussillon","limousin","lorraine","martinique","mayotte","midi-pyrenees","nord-pas-de-calais","pays-de-la-loire","picardie","poitou-charentes","provence-alpes-cote-d-azur","reunion","rhone-alpes"]
     
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v2
           
       - name: Download ${{ matrix.subregion }}
         run: |
           for i in {1..10}; do wget https://download.geofabrik.de/europe/france/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
-      - name: Prepare ocean coverage
-        uses: ./.github/actions/ocean
-        with:
-          source: ${{ matrix.subregion }}-latest.osm.pbf
-          land-cache-key: ${{ needs.prepare.outputs.land_cache_key }}
-          land-sha256: ${{ needs.prepare.outputs.land_sha256 }}
-
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          maptool --ocean-polygons ocean.items --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-france-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-france-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v7
@@ -330,22 +268,15 @@ jobs:
         subregion: ["baden-wuerttemberg","bayern","berlin","brandenburg","bremen","hamburg","hessen","mecklenburg-vorpommern","niedersachsen","nordrhein-westfalen","rheinland-pfalz","saarland","sachsen-anhalt","sachsen","schleswig-holstein","thueringen"]
     
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v2
           
       - name: Download ${{ matrix.subregion }}
         run: |
           for i in {1..10}; do wget https://download.geofabrik.de/europe/germany/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
-      - name: Prepare ocean coverage
-        uses: ./.github/actions/ocean
-        with:
-          source: ${{ matrix.subregion }}-latest.osm.pbf
-          land-cache-key: ${{ needs.prepare.outputs.land_cache_key }}
-          land-sha256: ${{ needs.prepare.outputs.land_sha256 }}
-
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          maptool --ocean-polygons ocean.items --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-germany-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-germany-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v7
@@ -372,22 +303,15 @@ jobs:
         subregion: ["england","scotland","wales"]
     
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v2
           
       - name: Download ${{ matrix.subregion }}
         run: |
           for i in {1..10}; do wget https://download.geofabrik.de/europe/united-kingdom/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
-      - name: Prepare ocean coverage
-        uses: ./.github/actions/ocean
-        with:
-          source: ${{ matrix.subregion }}-latest.osm.pbf
-          land-cache-key: ${{ needs.prepare.outputs.land_cache_key }}
-          land-sha256: ${{ needs.prepare.outputs.land_sha256 }}
-
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          maptool --ocean-polygons ocean.items --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-united-kingdom-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-united-kingdom-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       
       - name: Upload Artifact
@@ -416,22 +340,15 @@ jobs:
         subregion: ["centro","isole","nord-est","nord-ovest","sud"]
     
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v2
           
       - name: Download ${{ matrix.subregion }}
         run: |
           for i in {1..10}; do wget https://download.geofabrik.de/europe/italy/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
-      - name: Prepare ocean coverage
-        uses: ./.github/actions/ocean
-        with:
-          source: ${{ matrix.subregion }}-latest.osm.pbf
-          land-cache-key: ${{ needs.prepare.outputs.land_cache_key }}
-          land-sha256: ${{ needs.prepare.outputs.land_sha256 }}
-
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          maptool --ocean-polygons ocean.items --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-italy-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-italy-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v7
@@ -459,22 +376,15 @@ jobs:
         subregion: ["drenthe","flevoland","friesland","gelderland","groningen","limburg","noord-brabant","noord-holland","overijssel","utrecht","zeeland","zuid-holland"]
     
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v2
           
       - name: Download ${{ matrix.subregion }}
         run: |
           for i in {1..10}; do wget https://download.geofabrik.de/europe/netherlands/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
-      - name: Prepare ocean coverage
-        uses: ./.github/actions/ocean
-        with:
-          source: ${{ matrix.subregion }}-latest.osm.pbf
-          land-cache-key: ${{ needs.prepare.outputs.land_cache_key }}
-          land-sha256: ${{ needs.prepare.outputs.land_sha256 }}
-
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          maptool --ocean-polygons ocean.items --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-netherlands-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-netherlands-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v7
@@ -501,22 +411,15 @@ jobs:
         subregion: ["dolnoslaskie","kujawsko-pomorskie","lodzkie","lubelskie","lubuskie","malopolskie","mazowieckie","opolskie","podkarpackie","podlaskie","pomorskie","slaskie","swietokrzyskie","warminsko-mazurskie","wielkopolskie","zachodniopomorskie"]
     
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v2
           
       - name: Download ${{ matrix.subregion }}
         run: |
           for i in {1..10}; do wget https://download.geofabrik.de/europe/poland/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
-      - name: Prepare ocean coverage
-        uses: ./.github/actions/ocean
-        with:
-          source: ${{ matrix.subregion }}-latest.osm.pbf
-          land-cache-key: ${{ needs.prepare.outputs.land_cache_key }}
-          land-sha256: ${{ needs.prepare.outputs.land_sha256 }}
-
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          maptool --ocean-polygons ocean.items --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-poland-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-poland-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v7
@@ -543,22 +446,15 @@ jobs:
         subregion: ['albania', 'andorra', 'austria', 'azores', 'belarus', 'belgium', 'bosnia-herzegovina', 'bulgaria', 'croatia', 'cyprus', 'czech-republic', 'denmark', 'estonia', 'faroe-islands', 'finland', 'georgia', 'greece', 'guernsey-jersey', 'hungary', 'iceland', 'ireland-and-northern-ireland', 'isle-of-man', 'kosovo', 'latvia', 'liechtenstein', 'lithuania', 'luxembourg', 'macedonia', 'malta', 'moldova', 'monaco', 'montenegro', 'norway', 'portugal', 'romania', 'serbia', 'slovakia', 'slovenia', 'spain', 'sweden', 'switzerland', 'turkey', 'ukraine']
     
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v2
           
       - name: Download ${{ matrix.subregion }}
         run: |
           for i in {1..10}; do wget https://download.geofabrik.de/europe/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
-      - name: Prepare ocean coverage
-        uses: ./.github/actions/ocean
-        with:
-          source: ${{ matrix.subregion }}-latest.osm.pbf
-          land-cache-key: ${{ needs.prepare.outputs.land_cache_key }}
-          land-sha256: ${{ needs.prepare.outputs.land_sha256 }}
-
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          maptool --ocean-polygons ocean.items --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf europe-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v7
@@ -585,22 +481,15 @@ jobs:
         subregion: ["alberta","british-columbia","manitoba","new-brunswick","newfoundland-and-labrador","northwest-territories","nova-scotia","nunavut","ontario","prince-edward-island","quebec","saskatchewan","yukon"]
     
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v2
           
       - name: Download ${{ matrix.subregion }}
         run: |
           for i in {1..10}; do wget https://download.geofabrik.de/north-america/canada/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
-      - name: Prepare ocean coverage
-        uses: ./.github/actions/ocean
-        with:
-          source: ${{ matrix.subregion }}-latest.osm.pbf
-          land-cache-key: ${{ needs.prepare.outputs.land_cache_key }}
-          land-sha256: ${{ needs.prepare.outputs.land_sha256 }}
-
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          maptool --ocean-polygons ocean.items --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf north-america-canada-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf north-america-canada-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v7
@@ -627,22 +516,15 @@ jobs:
         subregion: ["alabama","alaska","arizona","arkansas","california","colorado","connecticut","delaware","district-of-columbia","florida","georgia","hawaii","idaho","illinois","indiana","iowa","kansas","kentucky","louisiana","maine","maryland","massachusetts","michigan","minnesota","mississippi","missouri","montana","nebraska","nevada","new-hampshire","new-jersey","new-mexico","new-york","north-carolina","north-dakota","ohio","oklahoma","oregon","pennsylvania","puerto-rico","rhode-island","south-carolina","south-dakota","tennessee","texas","utah","vermont","virginia","washington","west-virginia","wisconsin","wyoming"]
     
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v2
           
       - name: Download ${{ matrix.subregion }}
         run: |
           for i in {1..10}; do wget https://download.geofabrik.de/north-america/us/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
-      - name: Prepare ocean coverage
-        uses: ./.github/actions/ocean
-        with:
-          source: ${{ matrix.subregion }}-latest.osm.pbf
-          land-cache-key: ${{ needs.prepare.outputs.land_cache_key }}
-          land-sha256: ${{ needs.prepare.outputs.land_sha256 }}
-
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          maptool --ocean-polygons ocean.items --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf north-america-us-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf north-america-us-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v7
@@ -669,22 +551,15 @@ jobs:
         subregion: ["greenland","mexico"]
     
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v2
           
       - name: Download ${{ matrix.subregion }}
         run: |
           for i in {1..10}; do wget https://download.geofabrik.de/north-america/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
-      - name: Prepare ocean coverage
-        uses: ./.github/actions/ocean
-        with:
-          source: ${{ matrix.subregion }}-latest.osm.pbf
-          land-cache-key: ${{ needs.prepare.outputs.land_cache_key }}
-          land-sha256: ${{ needs.prepare.outputs.land_sha256 }}
-
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          maptool --ocean-polygons ocean.items --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf north-america-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf north-america-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v7
@@ -711,22 +586,15 @@ jobs:
         subregion: ["centro-oeste","nordeste","norte","sudeste","sul"]
     
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v2
           
       - name: Download ${{ matrix.subregion }}
         run: |
           for i in {1..10}; do wget https://download.geofabrik.de/south-america/brazil/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
-      - name: Prepare ocean coverage
-        uses: ./.github/actions/ocean
-        with:
-          source: ${{ matrix.subregion }}-latest.osm.pbf
-          land-cache-key: ${{ needs.prepare.outputs.land_cache_key }}
-          land-sha256: ${{ needs.prepare.outputs.land_sha256 }}
-
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          maptool --ocean-polygons ocean.items --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf south-america-brazil-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf south-america-brazil-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v7
@@ -753,22 +621,15 @@ jobs:
         subregion: ["argentina","bolivia","chile","colombia","ecuador","paraguay","peru","suriname","uruguay","venezuela"]
     
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v2
           
       - name: Download ${{ matrix.subregion }}
         run: |
           for i in {1..10}; do wget https://download.geofabrik.de/south-america/${{ matrix.subregion }}-latest.osm.pbf && break; done
 
-      - name: Prepare ocean coverage
-        uses: ./.github/actions/ocean
-        with:
-          source: ${{ matrix.subregion }}-latest.osm.pbf
-          land-cache-key: ${{ needs.prepare.outputs.land_cache_key }}
-          land-sha256: ${{ needs.prepare.outputs.land_sha256 }}
-
       - name: Build map for ${{ matrix.subregion }}
         run: |
-          maptool --ocean-polygons ocean.items --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf south-america-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
+          maptool --64bit --protobuf --slice-size 6442450944 -i ${{ matrix.subregion }}-latest.osm.pbf south-america-${{ matrix.subregion }}-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
         uses: actions/github-script@v7
@@ -831,7 +692,7 @@ jobs:
     - north-america
     - south-america
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v2
       - uses: actions/github-script@v7
         id: vars
         with:
