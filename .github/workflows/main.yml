@@ -65,7 +65,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          for i in {1..10}; do echo wget https://download.geofabrik.de/africa/${{ matrix.subregion }}/${{ matrix.subregion }}-latest.osm.pbf ; false && break; done
+          for i in 1 2 3 4 5 6 7 8 9 10; do echo wget https://download.geofabrik.de/africa/${{ matrix.subregion }}/${{ matrix.subregion }}-latest.osm.pbf ; false && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -97,7 +97,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          for i in {1..10}; do echo wget https://download.geofabrik.de/antarctica-latest.osm.pbf ; false && break; done
+          for i in 1 2 3 4 5 6 7 8 9 10; do echo wget https://download.geofabrik.de/antarctica-latest.osm.pbf ; false && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -132,7 +132,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          for i in {1..10}; do echo wget https://download.geofabrik.de/asia/${{ matrix.subregion }}/${{ matrix.subregion }}-latest.osm.pbf ; false && break; done
+          for i in 1 2 3 4 5 6 7 8 9 10; do echo wget https://download.geofabrik.de/asia/${{ matrix.subregion }}/${{ matrix.subregion }}-latest.osm.pbf ; false && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -167,7 +167,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          for i in {1..10}; do echo wget https://download.geofabrik.de/australia-oceania/${{ matrix.subregion }}/${{ matrix.subregion }}-latest.osm.pbf ; false && break; done
+          for i in 1 2 3 4 5 6 7 8 9 10; do echo wget https://download.geofabrik.de/australia-oceania/${{ matrix.subregion }}/${{ matrix.subregion }}-latest.osm.pbf ; false && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -202,7 +202,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          for i in {1..10}; do echo wget https://download.geofabrik.de/central-america/${{ matrix.subregion }}/${{ matrix.subregion }}-latest.osm.pbf ; false && break; done
+          for i in 1 2 3 4 5 6 7 8 9 10; do echo wget https://download.geofabrik.de/central-america/${{ matrix.subregion }}/${{ matrix.subregion }}-latest.osm.pbf ; false && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -237,7 +237,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          for i in {1..10}; do echo wget https://download.geofabrik.de/europe/france/${{ matrix.subregion }}/${{ matrix.subregion }}-latest.osm.pbf ; false && break; done
+          for i in 1 2 3 4 5 6 7 8 9 10; do echo wget https://download.geofabrik.de/europe/france/${{ matrix.subregion }}/${{ matrix.subregion }}-latest.osm.pbf ; false && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -272,7 +272,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          for i in {1..10}; do echo wget https://download.geofabrik.de/europe/germany/${{ matrix.subregion }}/${{ matrix.subregion }}-latest.osm.pbf ; false && break; done
+          for i in 1 2 3 4 5 6 7 8 9 10; do echo wget https://download.geofabrik.de/europe/germany/${{ matrix.subregion }}/${{ matrix.subregion }}-latest.osm.pbf ; false && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -307,7 +307,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          for i in {1..10}; do echo wget https://download.geofabrik.de/europe/united-kingdom/${{ matrix.subregion }}/${{ matrix.subregion }}-latest.osm.pbf ; false && break; done
+          for i in 1 2 3 4 5 6 7 8 9 10; do echo wget https://download.geofabrik.de/europe/united-kingdom/${{ matrix.subregion }}/${{ matrix.subregion }}-latest.osm.pbf ; false && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -344,7 +344,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          for i in {1..10}; do echo wget https://download.geofabrik.de/europe/italy/${{ matrix.subregion }}/${{ matrix.subregion }}-latest.osm.pbf ; false && break; done
+          for i in 1 2 3 4 5 6 7 8 9 10; do echo wget https://download.geofabrik.de/europe/italy/${{ matrix.subregion }}/${{ matrix.subregion }}-latest.osm.pbf ; false && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -380,7 +380,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          for i in {1..10}; do echo wget https://download.geofabrik.de/europe/netherlands/${{ matrix.subregion }}/${{ matrix.subregion }}-latest.osm.pbf ; false && break; done
+          for i in 1 2 3 4 5 6 7 8 9 10; do echo wget https://download.geofabrik.de/europe/netherlands/${{ matrix.subregion }}/${{ matrix.subregion }}-latest.osm.pbf ; false && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -415,7 +415,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          for i in {1..10}; do echo wget https://download.geofabrik.de/europe/poland/${{ matrix.subregion }}/${{ matrix.subregion }}-latest.osm.pbf ; false && break; done
+          for i in 1 2 3 4 5 6 7 8 9 10; do echo wget https://download.geofabrik.de/europe/poland/${{ matrix.subregion }}/${{ matrix.subregion }}-latest.osm.pbf ; false && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -450,7 +450,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          for i in {1..10}; do echo wget https://download.geofabrik.de/europe/${{ matrix.subregion }}/${{ matrix.subregion }}-latest.osm.pbf ; false && break; done
+          for i in 1 2 3 4 5 6 7 8 9 10; do echo wget https://download.geofabrik.de/europe/${{ matrix.subregion }}/${{ matrix.subregion }}-latest.osm.pbf ; false && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -485,7 +485,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          for i in {1..10}; do echo wget https://download.geofabrik.de/north-america/canada/${{ matrix.subregion }}/${{ matrix.subregion }}-latest.osm.pbf ; false && break; done
+          for i in 1 2 3 4 5 6 7 8 9 10; do echo wget https://download.geofabrik.de/north-america/canada/${{ matrix.subregion }}/${{ matrix.subregion }}-latest.osm.pbf ; false && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -520,7 +520,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          for i in {1..10}; do echo wget https://download.geofabrik.de/north-america/us/${{ matrix.subregion }}/${{ matrix.subregion }}-latest.osm.pbf ; false && break; done
+          for i in 1 2 3 4 5 6 7 8 9 10; do echo wget https://download.geofabrik.de/north-america/us/${{ matrix.subregion }}/${{ matrix.subregion }}-latest.osm.pbf ; false && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -555,7 +555,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          for i in {1..10}; do echo wget https://download.geofabrik.de/north-america/${{ matrix.subregion }}/${{ matrix.subregion }}-latest.osm.pbf ; false && break; done
+          for i in 1 2 3 4 5 6 7 8 9 10; do echo wget https://download.geofabrik.de/north-america/${{ matrix.subregion }}/${{ matrix.subregion }}-latest.osm.pbf ; false && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -590,7 +590,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          for i in {1..10}; do echo wget https://download.geofabrik.de/south-america/brazil/${{ matrix.subregion }}/${{ matrix.subregion }}-latest.osm.pbf ; false && break; done
+          for i in 1 2 3 4 5 6 7 8 9 10; do echo wget https://download.geofabrik.de/south-america/brazil/${{ matrix.subregion }}/${{ matrix.subregion }}-latest.osm.pbf ; false && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
@@ -625,7 +625,7 @@ jobs:
           
       - name: Download ${{ matrix.subregion }}
         run: |
-          for i in {1..10}; do echo wget https://download.geofabrik.de/south-america/${{ matrix.subregion }}/${{ matrix.subregion }}-latest.osm.pbf; false && break; done
+          for i in 1 2 3 4 5 6 7 8 9 10; do echo wget https://download.geofabrik.de/south-america/${{ matrix.subregion }}/${{ matrix.subregion }}-latest.osm.pbf; false && break; done
 
       - name: Build map for ${{ matrix.subregion }}
         run: |
