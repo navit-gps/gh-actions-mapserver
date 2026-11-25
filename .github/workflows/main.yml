@@ -1407,13 +1407,13 @@ jobs:
     - name: Download and build maps
       uses: actions/github-script@v7
       with:
-        script: "const {execFileSync} = require('child_process');\nconst items = ${{ toJSON(matrix.items) }};\nconst tag = `${{ needs.prepare.outputs.tag_name }}`;\nfor (const it of items) {\n  const pbf = `${it.name}-latest.osm.pbf`;\n  const bin = `${it.out}-${tag}.bin`;\n  execFileSync('wget', ['-O', pbf, it.url], {stdio: 'inherit'});\n  execFileSync('maptool', ['--64bit', '--protobuf', '--slice-size', '6442450944', '-i', pbf, bin], {stdio: 'inherit'});\n}\n"
+        script: "const {execFileSync} = require('child_process');\n\nconst items = ${{ toJSON(matrix.items) }};\nconst tag = `${{ needs.prepare.outputs.tag_name }}`;\n\nfor (const it of items) {\n  const pbf = `${it.name}-latest.osm.pbf`;\n  const bin = `${it.out}-${tag}.bin`;\n\n  execFileSync('wget', [\n    '-4',\n    '--tries=10',\n    '--retry-connrefused',\n    '--waitretry=10',\n    '--retry-on-http-error=429,500,502,503,504',\n    '--timeout=30',\n    '--read-timeout=60',\n    '-O', pbf,\n    it.url,\n  ], {stdio: 'inherit'});\n\n  execFileSync('maptool', [\n    '--64bit',\n    '--protobuf',\n    '--slice-size', '6442450944',\n    '-i', pbf,\n    bin,\n  ], {stdio: 'inherit'});\n}\n"
     - name: Upload artifacts
       if: ${{ !env.ACT }}
       uses: actions/github-script@v7
       with:
         retries: 3
-        script: "const fs = require('fs');\nconst items = ${{ toJSON(matrix.items) }};\nconst tag = `${{ needs.prepare.outputs.tag_name }}`;\nfor (const it of items) {\n  const name = `${it.out}-${tag}.bin`;\n  await github.rest.repos.uploadReleaseAsset({\n    owner: context.repo.owner,\n    repo: context.repo.repo,\n    release_id: ${{ needs.prepare.outputs.id }},\n    name,\n    data: fs.readFileSync(name),\n  });\n}\n"
+        script: "const fs = require('fs');\n\nconst items = ${{ toJSON(matrix.items) }};\nconst tag = `${{ needs.prepare.outputs.tag_name }}`;\n\nfor (const it of items) {\n  const name = `${it.out}-${tag}.bin`;\n  await github.rest.repos.uploadReleaseAsset({\n    owner: context.repo.owner,\n    repo: context.repo.repo,\n    release_id: ${{ needs.prepare.outputs.id }},\n    name,\n    data: fs.readFileSync(name),\n  });\n}\n"
   post:
     runs-on: ubuntu-latest
     needs:
