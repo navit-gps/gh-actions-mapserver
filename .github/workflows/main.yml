@@ -43,7 +43,7 @@ jobs:
       image: ghcr.io/navit-gps/navit/maptool:trunk
     strategy:
       fail-fast: false
-      max-parallel: 5
+      max-parallel: 2
       matrix:
         include:
         - group: africa/algeria
