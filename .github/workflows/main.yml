@@ -1437,6 +1437,7 @@ jobs:
               '--retry-connrefused',
               '--waitretry=35',
               '--retry-on-http-error=429,500,502,503,504',
+              '--limit-rate=500k',
               '--timeout=30',
               '--read-timeout=60',
               '-O', pbf,
