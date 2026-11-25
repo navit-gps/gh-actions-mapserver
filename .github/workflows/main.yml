@@ -1433,9 +1433,9 @@ jobs:
 
             execFileSync('wget', [
               '-4',
-              '--tries=10',
+              '--tries=15',
               '--retry-connrefused',
-              '--waitretry=10',
+              '--waitretry=35',
               '--retry-on-http-error=429,500,502,503,504',
               '--timeout=30',
               '--read-timeout=60',
