@@ -21,7 +21,21 @@ jobs:
       if: ${{ !env.ACT }}
       id: vars
       with:
-        script: "tag = new Date().toISOString().slice(0, 10)\nrelease = await github.rest.repos.createRelease({\n  owner: context.repo.owner,\n  repo: context.repo.repo,\n  tag_name: tag,\n  draft: true,\n  name: tag,\n  body: \"Automatically converted Maps\",\n});\nconst { id, html_url, upload_url } = release.data;\ncore.setOutput('id', id);\ncore.setOutput('html_url', html_url);\ncore.setOutput('upload_url', upload_url);\ncore.setOutput('tag_name', tag);\n"
+        script: |
+          tag = new Date().toISOString().slice(0, 10)
+          release = await github.rest.repos.createRelease({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            tag_name: tag,
+            draft: true,
+            name: tag,
+            body: "Automatically converted Maps",
+          });
+          const { id, html_url, upload_url } = release.data;
+          core.setOutput('id', id);
+          core.setOutput('html_url', html_url);
+          core.setOutput('upload_url', upload_url);
+          core.setOutput('tag_name', tag);
   build:
     needs: prepare
     runs-on: ubuntu-latest
@@ -1407,13 +1421,57 @@ jobs:
     - name: Download and build maps
       uses: actions/github-script@v7
       with:
-        script: "const {execFileSync} = require('child_process');\n\nconst items = ${{ toJSON(matrix.items) }};\nconst tag = `${{ needs.prepare.outputs.tag_name }}`;\n\nfor (const it of items) {\n  const pbf = `${it.name}-latest.osm.pbf`;\n  const bin = `${it.out}-${tag}.bin`;\n\n  execFileSync('wget', [\n    '-4',\n    '--tries=10',\n    '--retry-connrefused',\n    '--waitretry=10',\n    '--retry-on-http-error=429,500,502,503,504',\n    '--timeout=30',\n    '--read-timeout=60',\n    '-O', pbf,\n    it.url,\n  ], {stdio: 'inherit'});\n\n  execFileSync('maptool', [\n    '--64bit',\n    '--protobuf',\n    '--slice-size', '6442450944',\n    '-i', pbf,\n    bin,\n  ], {stdio: 'inherit'});\n}\n"
+        script: |
+          const {execFileSync} = require('child_process');
+
+          const items = ${{ toJSON(matrix.items) }};
+          const tag = `${{ needs.prepare.outputs.tag_name }}`;
+
+          for (const it of items) {
+            const pbf = `${it.name}-latest.osm.pbf`;
+            const bin = `${it.out}-${tag}.bin`;
+
+            execFileSync('wget', [
+              '-4',
+              '--tries=10',
+              '--retry-connrefused',
+              '--waitretry=10',
+              '--retry-on-http-error=429,500,502,503,504',
+              '--timeout=30',
+              '--read-timeout=60',
+              '-O', pbf,
+              it.url,
+            ], {stdio: 'inherit'});
+
+            execFileSync('maptool', [
+              '--64bit',
+              '--protobuf',
+              '--slice-size', '6442450944',
+              '-i', pbf,
+              bin,
+            ], {stdio: 'inherit'});
+          }
     - name: Upload artifacts
       if: ${{ !env.ACT }}
       uses: actions/github-script@v7
       with:
         retries: 3
-        script: "const fs = require('fs');\n\nconst items = ${{ toJSON(matrix.items) }};\nconst tag = `${{ needs.prepare.outputs.tag_name }}`;\n\nfor (const it of items) {\n  const name = `${it.out}-${tag}.bin`;\n  await github.rest.repos.uploadReleaseAsset({\n    owner: context.repo.owner,\n    repo: context.repo.repo,\n    release_id: ${{ needs.prepare.outputs.id }},\n    name,\n    data: fs.readFileSync(name),\n  });\n}\n"
+        script: |
+          const fs = require('fs');
+
+          const items = ${{ toJSON(matrix.items) }};
+          const tag = `${{ needs.prepare.outputs.tag_name }}`;
+
+          for (const it of items) {
+            const name = `${it.out}-${tag}.bin`;
+            await github.rest.repos.uploadReleaseAsset({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: ${{ needs.prepare.outputs.id }},
+              name,
+              data: fs.readFileSync(name),
+            });
+          }
   post:
     runs-on: ubuntu-latest
     needs:
@@ -1424,4 +1482,10 @@ jobs:
     - uses: actions/github-script@v7
       id: vars
       with:
-        script: "github.rest.repos.updateRelease({\n  owner: context.repo.owner,\n  repo: context.repo.repo,\n  release_id: ${{needs.prepare.outputs.id}},\n  draft: false,\n});\n"
+        script: |
+          github.rest.repos.updateRelease({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            release_id: ${{needs.prepare.outputs.id}},
+            draft: false,
+          });
