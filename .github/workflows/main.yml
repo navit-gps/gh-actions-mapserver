@@ -25,7 +25,7 @@ jobs:
       upload_url: ${{ steps.vars.outputs.upload_url }}
       tag_name: ${{ steps.vars.outputs.tag_name }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
       - uses: actions/github-script@v7
         if: ${{ !env.ACT }}
         id: vars
@@ -61,7 +61,7 @@ jobs:
         subregion: ["algeria", "angola", "benin", "botswana", "burkina-faso", "burundi", "cameroon", "canary-islands", "cape-verde", "central-african-republic", "chad", "comores", "congo-brazzaville", "congo-democratic-republic", "djibouti", "egypt", "equatorial-guinea", "eritrea", "ethiopia", "gabon", "ghana", "guinea", "guinea-bissau", "ivory-coast", "kenya", "lesotho", "liberia", "libya", "madagascar", "malawi", "mali", "mauritania", "mauritius", "morocco", "mozambique", "namibia", "niger", "nigeria", "rwanda", "saint-helena-ascension-and-tristan-da-cunha", "sao-tome-and-principe", "senegal-and-gambia", "seychelles", "sierra-leone", "somalia", "south-africa", "south-sudan", "sudan", "swaziland", "tanzania", "togo", "tunisia", "uganda", "zambia", "zimbabwe"]
     
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -93,7 +93,7 @@ jobs:
       image: ghcr.io/navit-gps/navit/maptool:trunk
     
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -128,7 +128,7 @@ jobs:
         subregion: ["afghanistan", "armenia", "azerbaijan", "bangladesh", "bhutan", "cambodia", "china", "gcc-states", "india", "indonesia", "iran", "iraq", "israel-and-palestine", "japan", "jordan", "kazakhstan", "kyrgyzstan", "laos", "lebanon", "malaysia-singapore-brunei", "maldives", "mongolia", "myanmar", "nepal", "north-korea", "pakistan", "philippines", "south-korea", "sri-lanka", "syria", "taiwan", "tajikistan", "thailand", "turkmenistan", "uzbekistan", "vietnam", "yemen"]
     
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -163,7 +163,7 @@ jobs:
         subregion: ["american-oceania", "australia", "cook-islands", "fiji", "ile-de-clipperton", "kiribati", "marshall-islands", "micronesia", "nauru", "new-caledonia", "new-zealand", "niue", "palau", "papua-new-guinea", "pitcairn-islands", "polynesie-francaise", "samoa", "solomon-islands", "tokelau", "tonga", "tuvalu", "vanuatu", "wallis-et-futuna"]
     
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -198,7 +198,7 @@ jobs:
         subregion: ["bahamas", "belize", "costa-rica", "cuba", "el-salvador", "guatemala", "haiti-and-domrep", "honduras", "jamaica", "nicaragua"]
     
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -233,7 +233,7 @@ jobs:
         subregion: ["alsace","aquitaine","auvergne","basse-normandie","bourgogne","bretagne","centre","champagne-ardenne","corse","franche-comte","guadeloupe","guyane","haute-normandie","ile-de-france","languedoc-roussillon","limousin","lorraine","martinique","mayotte","midi-pyrenees","nord-pas-de-calais","pays-de-la-loire","picardie","poitou-charentes","provence-alpes-cote-d-azur","reunion","rhone-alpes"]
     
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -268,7 +268,7 @@ jobs:
         subregion: ["baden-wuerttemberg","bayern","berlin","brandenburg","bremen","hamburg","hessen","mecklenburg-vorpommern","niedersachsen","nordrhein-westfalen","rheinland-pfalz","saarland","sachsen-anhalt","sachsen","schleswig-holstein","thueringen"]
     
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -303,7 +303,7 @@ jobs:
         subregion: ["england","scotland","wales"]
     
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -340,7 +340,7 @@ jobs:
         subregion: ["centro","isole","nord-est","nord-ovest","sud"]
     
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -376,7 +376,7 @@ jobs:
         subregion: ["drenthe","flevoland","friesland","gelderland","groningen","limburg","noord-brabant","noord-holland","overijssel","utrecht","zeeland","zuid-holland"]
     
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -411,7 +411,7 @@ jobs:
         subregion: ["dolnoslaskie","kujawsko-pomorskie","lodzkie","lubelskie","lubuskie","malopolskie","mazowieckie","opolskie","podkarpackie","podlaskie","pomorskie","slaskie","swietokrzyskie","warminsko-mazurskie","wielkopolskie","zachodniopomorskie"]
     
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -446,7 +446,7 @@ jobs:
         subregion: ['albania', 'andorra', 'austria', 'azores', 'belarus', 'belgium', 'bosnia-herzegovina', 'bulgaria', 'croatia', 'cyprus', 'czech-republic', 'denmark', 'estonia', 'faroe-islands', 'finland', 'georgia', 'greece', 'guernsey-jersey', 'hungary', 'iceland', 'ireland-and-northern-ireland', 'isle-of-man', 'kosovo', 'latvia', 'liechtenstein', 'lithuania', 'luxembourg', 'macedonia', 'malta', 'moldova', 'monaco', 'montenegro', 'norway', 'portugal', 'romania', 'serbia', 'slovakia', 'slovenia', 'spain', 'sweden', 'switzerland', 'turkey', 'ukraine']
     
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -481,7 +481,7 @@ jobs:
         subregion: ["alberta","british-columbia","manitoba","new-brunswick","newfoundland-and-labrador","northwest-territories","nova-scotia","nunavut","ontario","prince-edward-island","quebec","saskatchewan","yukon"]
     
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -516,7 +516,7 @@ jobs:
         subregion: ["alabama","alaska","arizona","arkansas","california","colorado","connecticut","delaware","district-of-columbia","florida","georgia","hawaii","idaho","illinois","indiana","iowa","kansas","kentucky","louisiana","maine","maryland","massachusetts","michigan","minnesota","mississippi","missouri","montana","nebraska","nevada","new-hampshire","new-jersey","new-mexico","new-york","north-carolina","north-dakota","ohio","oklahoma","oregon","pennsylvania","puerto-rico","rhode-island","south-carolina","south-dakota","tennessee","texas","utah","vermont","virginia","washington","west-virginia","wisconsin","wyoming"]
     
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -551,7 +551,7 @@ jobs:
         subregion: ["greenland","mexico"]
     
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -586,7 +586,7 @@ jobs:
         subregion: ["centro-oeste","nordeste","norte","sudeste","sul"]
     
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -621,7 +621,7 @@ jobs:
         subregion: ["argentina","bolivia","chile","colombia","ecuador","paraguay","peru","suriname","uruguay","venezuela"]
     
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
           
       - name: Download ${{ matrix.subregion }}
         run: |
@@ -692,7 +692,7 @@ jobs:
     - north-america
     - south-america
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
       - uses: actions/github-script@v7
         id: vars
         with:

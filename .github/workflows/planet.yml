@@ -27,7 +27,7 @@ jobs:
       upload_url: ${{ steps.vars.outputs.upload_url }}
       tag_name: ${{ steps.vars.outputs.tag_name }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
       - uses: actions/github-script@v4
         id: vars
         with:
@@ -53,7 +53,7 @@ jobs:
     timeout-minutes: 4320
     
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
       - name: Setup maptool
         run: |
           #TODO: replace with "gh release download -R navit-gps/navit --pattern '*linux*sh'" once uploaded
@@ -97,7 +97,7 @@ jobs:
     needs:
     - planet
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
       - name: Publish Release
         run: |
           # Replace with gh command when they have a corresponding edit command
