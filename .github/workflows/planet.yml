@@ -28,7 +28,7 @@ jobs:
       tag_name: ${{ steps.vars.outputs.tag_name }}
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/github-script@v4
+      - uses: actions/github-script@v9
         id: vars
         with:
           script: |
@@ -80,7 +80,7 @@ jobs:
           ./navit/bin/maptool --64bit --protobuf --slice-size 4294967296 --ignore-unknown -i planet-latest.osm.pbf planet-${{needs.prepare.outputs.tag_name}}.bin
           
       - name: Upload Artifact
-        uses: actions/github-script@v4
+        uses: actions/github-script@v9
         with:
           script: |
             const fs = require('fs');
